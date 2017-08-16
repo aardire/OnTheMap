@@ -17,6 +17,7 @@
 		8564197F1F3D104400BF2EFE /* UdactiyClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8564197E1F3D104400BF2EFE /* UdactiyClient.swift */; };
 		856419811F3D15EC00BF2EFE /* ParseClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 856419801F3D15EC00BF2EFE /* ParseClient.swift */; };
 		856419831F3D15FD00BF2EFE /* ParseConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 856419821F3D15FD00BF2EFE /* ParseConstants.swift */; };
+		85A89BC61F44C28700D0D85F /* GCDBlackBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85A89BC51F44C28700D0D85F /* GCDBlackBox.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +33,7 @@
 		8564197E1F3D104400BF2EFE /* UdactiyClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UdactiyClient.swift; sourceTree = "<group>"; };
 		856419801F3D15EC00BF2EFE /* ParseClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParseClient.swift; sourceTree = "<group>"; };
 		856419821F3D15FD00BF2EFE /* ParseConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParseConstants.swift; sourceTree = "<group>"; };
+		85A89BC51F44C28700D0D85F /* GCDBlackBox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GCDBlackBox.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -65,6 +67,7 @@
 			isa = PBXGroup;
 			children = (
 				856419591F3D080500BF2EFE /* AppDelegate.swift */,
+				85A89BC51F44C28700D0D85F /* GCDBlackBox.swift */,
 				856419731F3D0DF800BF2EFE /* Model */,
 				856419721F3D0DF300BF2EFE /* View */,
 				856419711F3D0DEC00BF2EFE /* Controller */,
@@ -215,6 +218,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				85A89BC61F44C28700D0D85F /* GCDBlackBox.swift in Sources */,
 				856419811F3D15EC00BF2EFE /* ParseClient.swift in Sources */,
 				8564197F1F3D104400BF2EFE /* UdactiyClient.swift in Sources */,
 				8564197B1F3D0F0F00BF2EFE /* MapandTableTabViewController.swift in Sources */,
@@ -381,6 +385,7 @@
 				8564196A1F3D080500BF2EFE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
