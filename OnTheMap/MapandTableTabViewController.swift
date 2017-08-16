@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MapandTableTabViewController: UIViewController {
+class MapandTableTabViewController: UITabBarController {
     
     override func viewDidLoad() {
         super.viewDidLoad()

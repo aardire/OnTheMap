@@ -144,6 +144,116 @@
             </objects>
             <point key="canvasLocation" x="-1479.2" y="-291.00449775112446"/>
         </scene>
+        <!--Mapand Table Tab View Controller-->
+        <scene sceneID="gjg-sz-9th">
+            <objects>
+                <tabBarController storyboardIdentifier="MapandTableTabViewController" id="miI-3k-AhL" customClass="MapandTableTabViewController" customModule="OnTheMap" customModuleProvider="target" sceneMemberID="viewController">
+                    <tabBar key="tabBar" contentMode="scaleToFill" id="njf-Zw-tpw">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="49"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    </tabBar>
+                    <connections>
+                        <segue destination="PXj-yA-vJq" kind="relationship" relationship="viewControllers" id="bIU-V9-E7G"/>
+                        <segue destination="gvE-oE-RRT" kind="relationship" relationship="viewControllers" id="uep-gj-Xmu"/>
+                    </connections>
+                </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="bI9-lZ-dhD" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-596" y="-290"/>
+        </scene>
+        <!--Root View Controller-->
+        <scene sceneID="s99-BY-Z9w">
+            <objects>
+                <tableViewController id="xwa-Gq-uwo" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="swG-B0-9Vk">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="vpJ-03-In0">
+                                <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="vpJ-03-In0" id="qHc-cP-fJY">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="xwa-Gq-uwo" id="QDW-n6-lXu"/>
+                            <outlet property="delegate" destination="xwa-Gq-uwo" id="blU-bc-hsX"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Root View Controller" id="hyx-pT-ius"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="67E-co-QQ1" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1129" y="-641"/>
+        </scene>
+        <!--Root View Controller-->
+        <scene sceneID="IgF-UH-yrI">
+            <objects>
+                <tableViewController id="ir9-UU-iL1" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="ui1-mU-pcN">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="jNm-9m-7Bi">
+                                <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="jNm-9m-7Bi" id="iuI-Qv-Ime">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="ir9-UU-iL1" id="fNa-Ye-6r1"/>
+                            <outlet property="delegate" destination="ir9-UU-iL1" id="pTs-w0-7DS"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Root View Controller" id="Dx8-ol-AKN"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="5Pi-kM-NVh" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1129" y="75"/>
+        </scene>
+        <!--Item-->
+        <scene sceneID="i6b-xi-88d">
+            <objects>
+                <navigationController id="gvE-oE-RRT" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Item" id="cqt-9M-aWu"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="eQI-H6-BPs">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="ir9-UU-iL1" kind="relationship" relationship="rootViewController" id="EcO-f3-3Zr"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="mu6-mz-ZMM" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="174" y="75"/>
+        </scene>
+        <!--Item-->
+        <scene sceneID="Kwb-8k-Jsl">
+            <objects>
+                <navigationController id="PXj-yA-vJq" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Item" id="Nlg-Di-EDT"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="KNu-Gn-MKM">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="xwa-Gq-uwo" kind="relationship" relationship="rootViewController" id="SfU-As-Yyv"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="PCe-wW-nq6" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="174" y="-641"/>
+        </scene>
     </scenes>
     <resources>
         <image name="logo-u" width="62" height="62"/>
