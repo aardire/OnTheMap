@@ -23,10 +23,6 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var udacityLogoImageView: UIImageView!
     @IBOutlet weak var debugTextLabel: UILabel!
     
-    
-    
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -47,23 +43,37 @@ class LoginViewController: UIViewController {
         
         userDidTapView(self)
         
+        var parameters = [String:AnyObject]()
+        parameters["username"] = usernameTextField.text! as AnyObject?
+        parameters["password"] = passwordTextField.text! as AnyObject?
+        
         if usernameTextField.text!.isEmpty || passwordTextField.text!.isEmpty {
             debugTextLabel.text = "Username or Password Empty."
         } else {
             setUIEnabled(false)
             
-            // make the network request
-            // if success -> complete login 
+            UdactiyClient.sharedInstance().getRegistration(parameters) { (registration, key, error) in
+                
+                performUIUpdatesOnMain {
+                    if registration {
+                        self.completeLogin()
+                    } else {
+                        self.displayError(error)
+                    }
+                }
+                
+            }
+            
         }
     }
     
     private func completeLogin() {
-        performUIUpdatesOnMain {
+        
             self.debugTextLabel.text = ""
             self.setUIEnabled(true)
             let controller = self.storyboard!.instantiateViewController(withIdentifier: "MapandTableTabViewController") as! UITabBarController
             self.present(controller, animated: true, completion: nil)
-        }
+        
     }
 }
 
@@ -140,14 +150,22 @@ private extension LoginViewController {
         }
     }
     
+    func displayError(_ errorString: String?) {
+        if let errorString = errorString {
+            debugTextLabel.text = errorString
+        }
+    }
+    
     func configureUI() {
         
+        /*
         // configure background gradient
         let backgroundGradient = CAGradientLayer()
         backgroundGradient.colors = [Constants.UI.LoginColorTop, Constants.UI.LoginColorBottom]
         backgroundGradient.locations = [0.0, 1.0]
         backgroundGradient.frame = view.frame
         view.layer.insertSublayer(backgroundGradient, at: 0)
+        */
         
         configureTextField(usernameTextField)
         configureTextField(passwordTextField)
@@ -158,10 +176,10 @@ private extension LoginViewController {
         let textFieldPaddingView = UIView(frame: textFieldPaddingViewFrame)
         textField.leftView = textFieldPaddingView
         textField.leftViewMode = .always
-        textField.backgroundColor = Constants.UI.GreyColor
-        textField.textColor = Constants.UI.BlueColor
+        //textField.backgroundColor = Constants.UI.GreyColor
+        //textField.textColor = Constants.UI.BlueColor
         textField.attributedPlaceholder = NSAttributedString(string: textField.placeholder!, attributes: [NSForegroundColorAttributeName: UIColor.white])
-        textField.tintColor = Constants.UI.BlueColor
+        //textField.tintColor = Constants.UI.BlueColor
         textField.delegate = self
     }
 }
