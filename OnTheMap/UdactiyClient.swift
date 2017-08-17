@@ -6,7 +6,7 @@
 //  Copyright © 2017 Andrew F Ardire. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 // MARK: UdactiyClient: NSObject 
 
@@ -16,34 +16,11 @@ class UdactiyClient : NSObject {
     
     // shared session
     var session = URLSession.shared
+    var uniqueID: String = ""
     
     
     // MARK: Convenience Functions
     
-    func getRegistration(_ parameters: [String: String], completionHandlerForUserID: @escaping (_ success: Bool, /*_ uniqueKey:Int? */ _ errorString: String?) -> Void) {
-        
-        let _ = taskForUdacityPOST(parameters) { (results, error) in
-            
-            guard let accountInfo = results?["account"] as? [String:Any] else {
-                completionHandlerForUserID(false,"Error Retrieving Account Information")
-                return
-            }
-            
-            guard let registration = accountInfo["registered"] as? Bool else {
-                completionHandlerForUserID(false, "Error Retrieving Registration Information")
-                return
-            }
-            
-            /*
-            guard let userKey = accountInfo["key"] as? Int else {
-                completionHandlerForUserID(false,nil,"Error Retrieving Key Information")
-                return
-            }
- */
-            
-            completionHandlerForUserID(registration,nil)
-        }
-    }
     
     // MARK: networking functions
     
@@ -98,6 +75,50 @@ class UdactiyClient : NSObject {
         task.resume()
         return task
     }
+    
+    func taskForUdacityGET(_ uniqueID: String, completionHandlerForPOST: @escaping (_ result: AnyObject?, _ error: NSError?) -> Void) -> URLSessionDataTask  {
+        
+        let request = NSMutableURLRequest(url: URL(string: "https://www.udacity.com/api/users/\(uniqueID)")!)
+        
+        /* 4. Make the request */
+        let task = session.dataTask(with: request as URLRequest) { data, response, error in
+            
+            func sendError(_ error: String) {
+                print(error)
+                let userInfo = [NSLocalizedDescriptionKey : error]
+                completionHandlerForPOST(nil, NSError(domain: "taskForGETMethod", code: 1, userInfo: userInfo))
+            }
+            
+            /* GUARD: Was there an error? */
+            guard (error == nil) else {
+                sendError("There was an error with your request: \(error!)")
+                return
+            }
+            
+            /* GUARD: Did we get a successful 2XX response? */
+            guard let statusCode = (response as? HTTPURLResponse)?.statusCode, statusCode >= 200 && statusCode <= 299 else {
+                sendError("Your request returned a status code other than 2xx!")
+                return
+            }
+            
+            /* GUARD: Was there any data returned? */
+            guard let data = data else {
+                sendError("No data was returned by the request!")
+                return
+            }
+            
+            let range = Range(5..<data.count)
+            let newData = data.subdata(in: range) /* subset response data! */
+            
+            /* 5/6. Parse the data and use the data (happens in completion handler) */
+            self.convertDataWithCompletionHandler(newData, completionHandlerForConvertData: completionHandlerForPOST)
+        }
+        
+        /* 7. Start the request */
+        task.resume()
+        return task
+    }
+    
     
     // MARK: Helpers
     
