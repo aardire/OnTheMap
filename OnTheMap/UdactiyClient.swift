@@ -16,17 +16,15 @@ class UdactiyClient : NSObject {
     
     // shared session
     var session = URLSession.shared
-    var userKey: String?
     
     
     // MARK: Convenience Functions
     
-    func getRegistration(_ parameters: [String:AnyObject], completionHandlerForUserID: @escaping (_ success: Bool, _ userID: String?, _ errorString: String?) -> Void) {
-        
+    func getRegistration(_ parameters: [String: String], completionHandlerForUserID: @escaping (_ success: Bool, _ uniqueKey:Int? , _ errorString: String?) -> Void) {
         
         let _ = taskForUdacityPOST(parameters) { (results, error) in
             
-            guard let accountInfo = results?["account"] as? [String:AnyObject] else {
+            guard let accountInfo = results?["account"] as? [String:Any] else {
                 completionHandlerForUserID(false,nil,"Error Retrieving Account Information")
                 return
             }
@@ -36,23 +34,22 @@ class UdactiyClient : NSObject {
                 return
             }
             
-            guard let userKey = accountInfo["key"] as? String else {
+            guard let userKey = accountInfo["key"] as? Int else {
                 completionHandlerForUserID(false,nil,"Error Retrieving Key Information")
                 return
             }
             
-            self.userKey = userKey
             completionHandlerForUserID(registration,userKey,nil)
         }
     }
     
     // MARK: networking functions
     
-    func taskForUdacityPOST(_ parameters: [String:AnyObject], completionHandlerForPOST: @escaping (_ result: AnyObject?, _ error: NSError?) -> Void) -> URLSessionDataTask  {
+    func taskForUdacityPOST(_ parameters: [String:String], completionHandlerForPOST: @escaping (_ result: AnyObject?, _ error: NSError?) -> Void) -> URLSessionDataTask  {
         
        /* 1. Set the parameters */
-        let userName = parameters["username"] as? String
-        let userPassword = parameters["password"] as? String
+        let userName = parameters["username"]
+        let userPassword = parameters["password"] 
         
         /* 2/3. Build the URL, Configure the request */
         let request = NSMutableURLRequest(url: URL(string: "https://www.udacity.com/api/session")!)
@@ -116,7 +113,7 @@ class UdactiyClient : NSObject {
         completionHandlerForConvertData(parsedResult, nil)
     }
     
-        // MARK: Shared Instance
+    // MARK: Shared Instance
     
     class func sharedInstance() -> UdactiyClient {
         struct Singleton {

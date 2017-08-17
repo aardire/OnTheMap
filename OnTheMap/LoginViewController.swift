@@ -43,9 +43,9 @@ class LoginViewController: UIViewController {
         
         userDidTapView(self)
         
-        var parameters = [String:AnyObject]()
-        parameters["username"] = usernameTextField.text! as AnyObject?
-        parameters["password"] = passwordTextField.text! as AnyObject?
+        var parameters = [String:String]()
+        parameters["username"] = usernameTextField.text!
+        parameters["password"] = passwordTextField.text!
         
         if usernameTextField.text!.isEmpty || passwordTextField.text!.isEmpty {
             debugTextLabel.text = "Username or Password Empty."

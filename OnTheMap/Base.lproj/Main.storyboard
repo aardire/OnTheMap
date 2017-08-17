@@ -166,10 +166,10 @@
             </objects>
             <point key="canvasLocation" x="-588" y="-291"/>
         </scene>
-        <!--View Controller-->
+        <!--Map View Controller-->
         <scene sceneID="c5g-7z-56g">
             <objects>
-                <viewController id="sQ3-b8-Myu" sceneMemberID="viewController">
+                <viewController id="sQ3-b8-Myu" customClass="MapViewController" customModule="OnTheMap" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="T8N-vP-mvF"/>
                         <viewControllerLayoutGuide type="bottom" id="ZXn-yI-qvu"/>
@@ -177,13 +177,30 @@
                     <view key="view" contentMode="scaleToFill" id="F5q-1u-GGc">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="iCp-st-TgC">
+                                <rect key="frame" x="16" y="28" width="343" height="590"/>
+                                <connections>
+                                    <outlet property="delegate" destination="sQ3-b8-Myu" id="aDY-cn-clE"/>
+                                </connections>
+                            </mapView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailingMargin" secondItem="iCp-st-TgC" secondAttribute="trailing" id="5uh-3G-3o6"/>
+                            <constraint firstItem="ZXn-yI-qvu" firstAttribute="top" secondItem="iCp-st-TgC" secondAttribute="bottom" id="9a3-0J-0v0"/>
+                            <constraint firstAttribute="leadingMargin" secondItem="iCp-st-TgC" secondAttribute="leading" id="kh6-Ld-q3d"/>
+                            <constraint firstItem="iCp-st-TgC" firstAttribute="top" secondItem="T8N-vP-mvF" secondAttribute="bottom" constant="8" id="zzn-Hr-dI0"/>
+                        </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="" image="icon_mapview-deselected" selectedImage="icon_mapview-selected" id="UvO-Bb-AIW"/>
+                    <connections>
+                        <outlet property="mapView" destination="iCp-st-TgC" id="mgA-0y-G1c"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QWf-Mf-g2O" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="289" y="-603"/>
+            <point key="canvasLocation" x="288.80000000000001" y="-603.14842578710648"/>
         </scene>
         <!--Table View Controller-->
         <scene sceneID="x8L-pU-U9H">

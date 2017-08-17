@@ -17,6 +17,9 @@
 		8564197F1F3D104400BF2EFE /* UdactiyClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8564197E1F3D104400BF2EFE /* UdactiyClient.swift */; };
 		856419811F3D15EC00BF2EFE /* ParseClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 856419801F3D15EC00BF2EFE /* ParseClient.swift */; };
 		856419831F3D15FD00BF2EFE /* ParseConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 856419821F3D15FD00BF2EFE /* ParseConstants.swift */; };
+		857DA3751F45D242001C7F4F /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 857DA3741F45D242001C7F4F /* MapViewController.swift */; };
+		857DA3771F45D761001C7F4F /* StudentLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 857DA3761F45D761001C7F4F /* StudentLocation.swift */; };
+		857DA3791F45E546001C7F4F /* ParseConvenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 857DA3781F45E546001C7F4F /* ParseConvenience.swift */; };
 		85A89BC61F44C28700D0D85F /* GCDBlackBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85A89BC51F44C28700D0D85F /* GCDBlackBox.swift */; };
 /* End PBXBuildFile section */
 
@@ -33,6 +36,9 @@
 		8564197E1F3D104400BF2EFE /* UdactiyClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UdactiyClient.swift; sourceTree = "<group>"; };
 		856419801F3D15EC00BF2EFE /* ParseClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParseClient.swift; sourceTree = "<group>"; };
 		856419821F3D15FD00BF2EFE /* ParseConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParseConstants.swift; sourceTree = "<group>"; };
+		857DA3741F45D242001C7F4F /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
+		857DA3761F45D761001C7F4F /* StudentLocation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StudentLocation.swift; sourceTree = "<group>"; };
+		857DA3781F45E546001C7F4F /* ParseConvenience.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParseConvenience.swift; sourceTree = "<group>"; };
 		85A89BC51F44C28700D0D85F /* GCDBlackBox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GCDBlackBox.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -93,6 +99,7 @@
 				856419781F3D0EF500BF2EFE /* LoginViewController.swift */,
 				8564197A1F3D0F0F00BF2EFE /* MapandTableTabViewController.swift */,
 				8564197C1F3D0F2300BF2EFE /* InformationPostingViewController.swift */,
+				857DA3741F45D242001C7F4F /* MapViewController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -142,6 +149,8 @@
 			children = (
 				856419801F3D15EC00BF2EFE /* ParseClient.swift */,
 				856419821F3D15FD00BF2EFE /* ParseConstants.swift */,
+				857DA3761F45D761001C7F4F /* StudentLocation.swift */,
+				857DA3781F45E546001C7F4F /* ParseConvenience.swift */,
 			);
 			name = Parse;
 			sourceTree = "<group>";
@@ -218,13 +227,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				857DA3791F45E546001C7F4F /* ParseConvenience.swift in Sources */,
 				85A89BC61F44C28700D0D85F /* GCDBlackBox.swift in Sources */,
 				856419811F3D15EC00BF2EFE /* ParseClient.swift in Sources */,
 				8564197F1F3D104400BF2EFE /* UdactiyClient.swift in Sources */,
 				8564197B1F3D0F0F00BF2EFE /* MapandTableTabViewController.swift in Sources */,
+				857DA3751F45D242001C7F4F /* MapViewController.swift in Sources */,
 				8564197D1F3D0F2300BF2EFE /* InformationPostingViewController.swift in Sources */,
 				856419791F3D0EF500BF2EFE /* LoginViewController.swift in Sources */,
 				8564195A1F3D080500BF2EFE /* AppDelegate.swift in Sources */,
+				857DA3771F45D761001C7F4F /* StudentLocation.swift in Sources */,
 				856419831F3D15FD00BF2EFE /* ParseConstants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -24,29 +24,27 @@ extension ParseClient {
     
     // MARK: Response Keys
     struct ResponseKeys {
-        static let ObjectID = "objectId"
-        static let UniqueKey = "uniqueKey"
+        static let CreatedAt = "createdAt"
         static let FirstName = "firstName"
         static let LastName = "lastName"
+        static let Latitude = "latitude"
+        static let Longitude = "longitude"
         static let MapString = "mapString"
         static let MediaURL = "mediaURL"
-        static let Latitude = "latitude"
-        static let Longitude = "Longitude"
-        
-        // Likely Won't need
-        static let CreatedAt = "createdAt"
+        static let ObjectID = "objectId"
+        static let UniqueKey = "uniqueKey"
         static let UpdatedAt = "updatedAt"
-        static let ACL = "ACL"
     }
     
     // MARK: Methods
     struct Parameters {
         static let Limit = "limit"
-        static let Skip = "skip"
-        static let Order = "order"
         static let Where = "where"
     }
     
+    struct Methods {
+        static let PutStudent = "/<objectId>"
+    }
     
     
 }
