@@ -93,8 +93,6 @@ class UdactiyClient : NSObject {
             
             /* 5/6. Parse the data and use the data (happens in completion handler) */
             self.convertDataWithCompletionHandler(newData, completionHandlerForConvertData: completionHandlerForPOST)
-           
-
         }
         
         /* 7. Start the request */

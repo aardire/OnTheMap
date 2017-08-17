@@ -71,9 +71,8 @@ class LoginViewController: UIViewController {
         
             self.debugTextLabel.text = ""
             self.setUIEnabled(true)
-            let controller = self.storyboard!.instantiateViewController(withIdentifier: "MapandTableTabViewController") as! UITabBarController
-            self.present(controller, animated: true, completion: nil)
-        
+            let controller = self.storyboard!.instantiateViewController(withIdentifier: "TabBarController") as! UITabBarController
+            present(controller, animated: true, completion: nil) 
     }
 }
 
@@ -92,7 +91,7 @@ extension LoginViewController: UITextFieldDelegate {
     
     func keyboardWillShow(_ notification: Notification) {
         if !keyboardOnScreen {
-            view.frame.origin.y -= keyboardHeight(notification)
+            view.frame.origin.y = -keyboardHeight(notification)
             udacityLogoImageView.isHidden = true
         }
     }
