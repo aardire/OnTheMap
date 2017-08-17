@@ -20,37 +20,31 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     
     // MARK: Life Cycle
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    override func viewWillAppear(_ animated:Bool) {
+        super.viewWillAppear(animated)
         
         var annotations = [MKPointAnnotation]()
         
-        ParseClient.sharedInstance().getStudentLocation(100) { (studentsDict, error) in
+        ParseClient.sharedInstance().createAnnotations { (studentsDict) in
             
-            if let studentsDict = studentsDict {
-                
-                for student in studentsDict {
+            performUIUpdatesOnMain {
+                if let studentsDict = studentsDict {
                     
-                    let lat = CLLocationDegrees(student.latitude)
-                    let long = CLLocationDegrees(student.longitude)
-                    
-                    let coordinate = CLLocationCoordinate2D(latitude: lat, longitude: long)
-                    
-                    let first = student.firstName
-                    let last = student.lastName
-                    let mediaURL = student.mediaURL
-                    
-                    let annotation = MKPointAnnotation()
-                    annotation.coordinate = coordinate
-                    annotation.title = "\(first) \(last)"
-                    annotation.subtitle = mediaURL
-                    
-                    annotations.append(annotation)
+                    for student in studentsDict {
+                        
+                        let coordinate = CLLocationCoordinate2D(latitude: CLLocationDegrees(student.latitude), longitude: CLLocationDegrees(student.longitude))
+                        
+                        let annotation = MKPointAnnotation()
+                        annotation.coordinate = coordinate
+                        annotation.title = "\(student.firstName) \(student.lastName)"
+                        annotation.subtitle = student.mediaURL
+                        
+                        annotations.append(annotation)
+                    }
                 }
+                  self.mapView.addAnnotations(annotations)
             }
         }
-        
-        self.mapView.addAnnotations(annotations)
     }
     
 

@@ -27,7 +27,6 @@ extension ParseClient {
                 if let results = studentLocations?[ParseClient.ResponseKeys.Results] as? [[String:Any]] {
                     
                     let students = StudentLocation.studentsFromResults(results)
-                    print(students)
                     completionHandlerForStudentLocations(students,nil)
                 } else {
                     completionHandlerForStudentLocations(nil,NSError(domain: "getStudentLocation parsing", code: 0, userInfo: [NSLocalizedDescriptionKey: "Could not parse getStudentLocation"]))
@@ -36,7 +35,18 @@ extension ParseClient {
         }
     }
     
-    
+    func createAnnotations(_ completionHandlerForAnnotations: @escaping (_ students: [StudentLocation]?) -> Void) {
+        
+        getStudentLocation(100) { (studentsDict, error) in
+            
+            if let error = error {
+                print(error)
+                completionHandlerForAnnotations(nil)
+            } else {
+                completionHandlerForAnnotations(studentsDict)
+            }
+        }
+    }
     
     
     
