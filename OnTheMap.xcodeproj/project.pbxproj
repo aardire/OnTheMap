@@ -147,9 +147,9 @@
 		856419771F3D0E5F00BF2EFE /* Parse */ = {
 			isa = PBXGroup;
 			children = (
-				856419801F3D15EC00BF2EFE /* ParseClient.swift */,
-				856419821F3D15FD00BF2EFE /* ParseConstants.swift */,
 				857DA3761F45D761001C7F4F /* StudentLocation.swift */,
+				856419821F3D15FD00BF2EFE /* ParseConstants.swift */,
+				856419801F3D15EC00BF2EFE /* ParseClient.swift */,
 				857DA3781F45E546001C7F4F /* ParseConvenience.swift */,
 			);
 			name = Parse;

@@ -34,6 +34,7 @@ extension ParseClient {
         static let ObjectID = "objectId"
         static let UniqueKey = "uniqueKey"
         static let UpdatedAt = "updatedAt"
+        static let Results = "results"
     }
     
     // MARK: Methods

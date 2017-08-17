@@ -52,7 +52,7 @@ class LoginViewController: UIViewController {
         } else {
             setUIEnabled(false)
             
-            UdactiyClient.sharedInstance().getRegistration(parameters) { (registration, key, error) in
+            UdactiyClient.sharedInstance().getRegistration(parameters) { (registration, error) in
                 
                 performUIUpdatesOnMain {
                     if registration {

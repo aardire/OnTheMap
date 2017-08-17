@@ -179,7 +179,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="iCp-st-TgC">
-                                <rect key="frame" x="16" y="28" width="343" height="590"/>
+                                <rect key="frame" x="0.0" y="28" width="375" height="590"/>
                                 <connections>
                                     <outlet property="delegate" destination="sQ3-b8-Myu" id="aDY-cn-clE"/>
                                 </connections>
@@ -187,10 +187,10 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="trailingMargin" secondItem="iCp-st-TgC" secondAttribute="trailing" id="5uh-3G-3o6"/>
-                            <constraint firstItem="ZXn-yI-qvu" firstAttribute="top" secondItem="iCp-st-TgC" secondAttribute="bottom" id="9a3-0J-0v0"/>
-                            <constraint firstAttribute="leadingMargin" secondItem="iCp-st-TgC" secondAttribute="leading" id="kh6-Ld-q3d"/>
-                            <constraint firstItem="iCp-st-TgC" firstAttribute="top" secondItem="T8N-vP-mvF" secondAttribute="bottom" constant="8" id="zzn-Hr-dI0"/>
+                            <constraint firstItem="iCp-st-TgC" firstAttribute="leading" secondItem="F5q-1u-GGc" secondAttribute="leadingMargin" constant="-16" id="7tb-am-Id0"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="iCp-st-TgC" secondAttribute="trailing" constant="-16" id="8K1-tq-ZvS"/>
+                            <constraint firstItem="iCp-st-TgC" firstAttribute="top" secondItem="T8N-vP-mvF" secondAttribute="bottom" constant="8" id="Mba-Wk-ZSn"/>
+                            <constraint firstItem="ZXn-yI-qvu" firstAttribute="top" secondItem="iCp-st-TgC" secondAttribute="bottom" id="jNp-C6-x4A"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="" image="icon_mapview-deselected" selectedImage="icon_mapview-selected" id="UvO-Bb-AIW"/>

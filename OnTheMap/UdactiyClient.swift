@@ -20,26 +20,28 @@ class UdactiyClient : NSObject {
     
     // MARK: Convenience Functions
     
-    func getRegistration(_ parameters: [String: String], completionHandlerForUserID: @escaping (_ success: Bool, _ uniqueKey:Int? , _ errorString: String?) -> Void) {
+    func getRegistration(_ parameters: [String: String], completionHandlerForUserID: @escaping (_ success: Bool, /*_ uniqueKey:Int? */ _ errorString: String?) -> Void) {
         
         let _ = taskForUdacityPOST(parameters) { (results, error) in
             
             guard let accountInfo = results?["account"] as? [String:Any] else {
-                completionHandlerForUserID(false,nil,"Error Retrieving Account Information")
+                completionHandlerForUserID(false,"Error Retrieving Account Information")
                 return
             }
             
             guard let registration = accountInfo["registered"] as? Bool else {
-                completionHandlerForUserID(false,nil,"Error Retrieving Registration Information")
+                completionHandlerForUserID(false, "Error Retrieving Registration Information")
                 return
             }
             
+            /*
             guard let userKey = accountInfo["key"] as? Int else {
                 completionHandlerForUserID(false,nil,"Error Retrieving Key Information")
                 return
             }
+ */
             
-            completionHandlerForUserID(registration,userKey,nil)
+            completionHandlerForUserID(registration,nil)
         }
     }
     

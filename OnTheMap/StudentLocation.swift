@@ -19,13 +19,13 @@ struct StudentLocation {
     let mapString: String
     let mediaURL: String
     let objectID: String
-    let uniqueKey: Int
+    let uniqueKey: String
     let updatedAt: String
     
     // MARK: Initializers
     // --- construct a studentlocation from a dictionary
     
-    init(dictionary: [String:AnyObject]) {
+    init(dictionary: [String:Any]) {
         createdAt = dictionary[ParseClient.ResponseKeys.CreatedAt] as! String
         firstName = dictionary[ParseClient.ResponseKeys.FirstName] as! String
         lastName = dictionary[ParseClient.ResponseKeys.LastName] as! String
@@ -34,11 +34,11 @@ struct StudentLocation {
         mapString = dictionary[ParseClient.ResponseKeys.MapString] as! String
         mediaURL = dictionary[ParseClient.ResponseKeys.MediaURL] as! String
         objectID = dictionary[ParseClient.ResponseKeys.ObjectID] as! String
-        uniqueKey = dictionary[ParseClient.ResponseKeys.UniqueKey] as! Int
+        uniqueKey = dictionary[ParseClient.ResponseKeys.UniqueKey] as! String
         updatedAt = dictionary[ParseClient.ResponseKeys.UpdatedAt] as! String
     }
     
-    static func studentsFromResults(_ results:[[String:AnyObject]]) -> [StudentLocation] {
+    static func studentsFromResults(_ results:[[String:Any]]) -> [StudentLocation] {
         
         var studentLocation = [StudentLocation]()
         
