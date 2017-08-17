@@ -205,13 +205,13 @@
         <!--Table View Controller-->
         <scene sceneID="x8L-pU-U9H">
             <objects>
-                <tableViewController id="CpQ-24-xgz" sceneMemberID="viewController">
+                <tableViewController id="CpQ-24-xgz" customClass="TableViewController" customModule="OnTheMap" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="3Ja-MR-33J">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="NIa-6Z-9P2">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="StudentsTableViewCell" id="NIa-6Z-9P2">
                                 <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="NIa-6Z-9P2" id="eGO-Qs-lxh">
@@ -226,6 +226,9 @@
                         </connections>
                     </tableView>
                     <tabBarItem key="tabBarItem" title="" image="icon_listview-deselected" selectedImage="icon_listview-selected" id="jiV-Gt-9eX"/>
+                    <connections>
+                        <outlet property="studentsTableView" destination="3Ja-MR-33J" id="b0Y-ym-IWH"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FMV-q2-aUM" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

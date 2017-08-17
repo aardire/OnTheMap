@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8537150F1F4625F3008BC301 /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8537150E1F4625F3008BC301 /* TableViewController.swift */; };
 		8564195A1F3D080500BF2EFE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 856419591F3D080500BF2EFE /* AppDelegate.swift */; };
 		8564195F1F3D080500BF2EFE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8564195D1F3D080500BF2EFE /* Main.storyboard */; };
 		856419611F3D080500BF2EFE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 856419601F3D080500BF2EFE /* Assets.xcassets */; };
@@ -24,6 +25,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		8537150E1F4625F3008BC301 /* TableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
 		856419561F3D080500BF2EFE /* OnTheMap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OnTheMap.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		856419591F3D080500BF2EFE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8564195E1F3D080500BF2EFE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -100,6 +102,7 @@
 				8564197A1F3D0F0F00BF2EFE /* MapandTableTabViewController.swift */,
 				8564197C1F3D0F2300BF2EFE /* InformationPostingViewController.swift */,
 				857DA3741F45D242001C7F4F /* MapViewController.swift */,
+				8537150E1F4625F3008BC301 /* TableViewController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -234,6 +237,7 @@
 				8564197B1F3D0F0F00BF2EFE /* MapandTableTabViewController.swift in Sources */,
 				857DA3751F45D242001C7F4F /* MapViewController.swift in Sources */,
 				8564197D1F3D0F2300BF2EFE /* InformationPostingViewController.swift in Sources */,
+				8537150F1F4625F3008BC301 /* TableViewController.swift in Sources */,
 				856419791F3D0EF500BF2EFE /* LoginViewController.swift in Sources */,
 				8564195A1F3D080500BF2EFE /* AppDelegate.swift in Sources */,
 				857DA3771F45D761001C7F4F /* StudentLocation.swift in Sources */,

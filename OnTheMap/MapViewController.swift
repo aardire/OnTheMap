@@ -25,7 +25,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         
         var annotations = [MKPointAnnotation]()
         
-        ParseClient.sharedInstance().createAnnotations { (studentsDict) in
+        ParseClient.sharedInstance().createStudentsDictionary { (studentsDict,error) in
             
             performUIUpdatesOnMain {
                 if let studentsDict = studentsDict {
@@ -41,8 +41,10 @@ class MapViewController: UIViewController, MKMapViewDelegate {
                         
                         annotations.append(annotation)
                     }
+                } else {
+                    print(error ?? "empty error")
                 }
-                  self.mapView.addAnnotations(annotations)
+                self.mapView.addAnnotations(annotations)
             }
         }
     }
