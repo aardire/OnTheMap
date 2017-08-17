@@ -25,8 +25,6 @@ class TableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // create and set the logout button
-        parent!.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .reply, target: self, action: #selector(logout))
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -46,11 +44,6 @@ class TableViewController: UITableViewController {
         
     }
     
-    // MARK: Logout
-    
-    func logout() {
-        dismiss(animated: true, completion: nil)
-    }
 
 
 // MARK: TableViewController : UITableViewDelegate, UITableViewDataSource

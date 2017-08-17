@@ -147,11 +147,34 @@
             </objects>
             <point key="canvasLocation" x="-1479.2" y="-291.00449775112446"/>
         </scene>
-        <!--Tab Bar Controller-->
+        <!--Navigation Controller-->
+        <scene sceneID="GZf-z0-SA2">
+            <objects>
+                <navigationController storyboardIdentifier="TabNavigationController" id="QYx-mL-1ce" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="r9x-aC-JRe">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="ueX-Lq-fgZ">
+                        <rect key="frame" x="0.0" y="623" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </toolbar>
+                    <connections>
+                        <segue destination="Iwx-v5-98I" kind="relationship" relationship="rootViewController" id="Ojb-Hb-nAA"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="0t3-La-ceO" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-706" y="-291"/>
+        </scene>
+        <!--On The Map-->
         <scene sceneID="Fml-bX-cBg">
             <objects>
                 <tabBarController storyboardIdentifier="TabBarController" id="Iwx-v5-98I" sceneMemberID="viewController">
-                    <navigationItem key="navigationItem" id="CJx-uc-LtN"/>
+                    <navigationItem key="navigationItem" title="On The Map" id="CJx-uc-LtN">
+                        <barButtonItem key="leftBarButtonItem" image="icon_pin" id="19X-tD-eI4"/>
+                        <barButtonItem key="rightBarButtonItem" image="icon_refresh" id="TbC-ja-K6r"/>
+                    </navigationItem>
                     <tabBar key="tabBar" contentMode="scaleToFill" id="k3R-Mo-u5U">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -164,7 +187,7 @@
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LTq-ap-i5Y" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-588" y="-291"/>
+            <point key="canvasLocation" x="25" y="-291"/>
         </scene>
         <!--Map View Controller-->
         <scene sceneID="c5g-7z-56g">
@@ -179,7 +202,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="iCp-st-TgC">
-                                <rect key="frame" x="0.0" y="28" width="375" height="590"/>
+                                <rect key="frame" x="0.0" y="64" width="375" height="554"/>
                                 <connections>
                                     <outlet property="delegate" destination="sQ3-b8-Myu" id="aDY-cn-clE"/>
                                 </connections>
@@ -189,7 +212,7 @@
                         <constraints>
                             <constraint firstItem="iCp-st-TgC" firstAttribute="leading" secondItem="F5q-1u-GGc" secondAttribute="leadingMargin" constant="-16" id="7tb-am-Id0"/>
                             <constraint firstAttribute="trailingMargin" secondItem="iCp-st-TgC" secondAttribute="trailing" constant="-16" id="8K1-tq-ZvS"/>
-                            <constraint firstItem="iCp-st-TgC" firstAttribute="top" secondItem="T8N-vP-mvF" secondAttribute="bottom" constant="8" id="Mba-Wk-ZSn"/>
+                            <constraint firstItem="iCp-st-TgC" firstAttribute="top" secondItem="T8N-vP-mvF" secondAttribute="bottom" id="Mba-Wk-ZSn"/>
                             <constraint firstItem="ZXn-yI-qvu" firstAttribute="top" secondItem="iCp-st-TgC" secondAttribute="bottom" id="jNp-C6-x4A"/>
                         </constraints>
                     </view>
@@ -200,7 +223,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QWf-Mf-g2O" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="288.80000000000001" y="-603.14842578710648"/>
+            <point key="canvasLocation" x="996" y="-635.53223388305855"/>
         </scene>
         <!--Table View Controller-->
         <scene sceneID="x8L-pU-U9H">
@@ -232,7 +255,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FMV-q2-aUM" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="289" y="66"/>
+            <point key="canvasLocation" x="996" y="56"/>
         </scene>
     </scenes>
     <resources>
@@ -240,6 +263,8 @@
         <image name="icon_listview-selected" width="75" height="50"/>
         <image name="icon_mapview-deselected" width="75" height="50"/>
         <image name="icon_mapview-selected" width="75" height="50"/>
+        <image name="icon_pin" width="24" height="24"/>
+        <image name="icon_refresh" width="24" height="24"/>
         <image name="logo-u" width="62" height="62"/>
     </resources>
 </document>
