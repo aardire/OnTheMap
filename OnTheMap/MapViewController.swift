@@ -28,7 +28,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
             
             performUIUpdatesOnMain {
                 if let studentsDict = studentsDict {
-                    
+                    print(studentsDict)
                     for student in studentsDict {
                         
                         let coordinate = CLLocationCoordinate2D(latitude: CLLocationDegrees(student.latitude), longitude: CLLocationDegrees(student.longitude))

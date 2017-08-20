@@ -71,6 +71,7 @@ extension UdactiyClient {
                         
                         self.firt_Name = userInfo?["first_name"] as! String
                         self.last_Name = userInfo?["last_name"] as! String
+                        
                         completionHandlerForUserInfo(sucess, nil)
                         
                     } else {

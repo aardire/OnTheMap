@@ -26,16 +26,67 @@ struct StudentLocation {
     // --- construct a studentlocation from a dictionary
     
     init(dictionary: [String:Any]) {
-        createdAt = dictionary[ParseClient.ResponseKeys.CreatedAt] as! String
-        firstName = dictionary[ParseClient.ResponseKeys.FirstName] as! String
-        lastName = dictionary[ParseClient.ResponseKeys.LastName] as! String
-        latitude = dictionary[ParseClient.ResponseKeys.Latitude] as! Double
-        longitude = dictionary[ParseClient.ResponseKeys.Longitude] as! Double
-        mapString = dictionary[ParseClient.ResponseKeys.MapString] as! String
-        mediaURL = dictionary[ParseClient.ResponseKeys.MediaURL] as! String
-        objectID = dictionary[ParseClient.ResponseKeys.ObjectID] as! String
-        uniqueKey = dictionary[ParseClient.ResponseKeys.UniqueKey] as! String
-        updatedAt = dictionary[ParseClient.ResponseKeys.UpdatedAt] as! String
+        
+        if let createdAtDict = dictionary[ParseClient.ResponseKeys.CreatedAt]  {
+            self.createdAt = createdAtDict as! String
+        } else {
+            self.createdAt = ""
+        }
+        
+        if let firstNameDict = dictionary[ParseClient.ResponseKeys.FirstName]  {
+            self.firstName = firstNameDict as! String
+        } else {
+            self.firstName = ""
+        }
+        
+        if let lastNameDict = dictionary[ParseClient.ResponseKeys.LastName] {
+            self.lastName = lastNameDict as! String
+        } else {
+            self.lastName = ""
+        }
+        
+        if let latitudeDict = dictionary[ParseClient.ResponseKeys.Latitude] {
+            self.latitude = latitudeDict as! Double
+        } else {
+            self.latitude = 0.0
+        }
+        
+        if let longitudeDict = dictionary[ParseClient.ResponseKeys.Longitude] {
+            self.longitude = longitudeDict as! Double
+        } else {
+            self.longitude = 0.0
+        }
+        
+        if let mapStringDict = dictionary[ParseClient.ResponseKeys.MapString] {
+            self.mapString = mapStringDict as! String
+        } else {
+            self.mapString = ""
+        }
+        
+        if let mediaURLDict = dictionary[ParseClient.ResponseKeys.MediaURL] {
+           self.mediaURL = mediaURLDict as! String
+        } else {
+            self.mediaURL = ""
+        }
+        
+        if let objectIDDict = dictionary[ParseClient.ResponseKeys.ObjectID] {
+            self.objectID = objectIDDict as! String
+        } else {
+            self.objectID = ""
+        }
+        
+        if let uniqueKeyDict = dictionary[ParseClient.ResponseKeys.UniqueKey] {
+            self.uniqueKey = uniqueKeyDict as! String
+        } else {
+            self.uniqueKey = ""
+        }
+        
+        if let updatedAtDict = dictionary[ParseClient.ResponseKeys.UpdatedAt] {
+            self.updatedAt = updatedAtDict as! String
+        } else {
+            self.updatedAt = ""
+        }
+        
     }
     
     static func studentsFromResults(_ results:[[String:Any]]) -> [StudentLocation] {
