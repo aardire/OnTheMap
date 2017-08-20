@@ -16,10 +16,23 @@ class UdactiyClient : NSObject {
     
     // shared session
     var session = URLSession.shared
-    var unique_ID: String = ""
-    var firt_Name: String = ""
-    var last_Name: String = ""
+
+    var createdAt = ""
+    var firstName = ""
+    var lastName = ""
+    var latitude = 0.0
+    var longitude = 0.0
+    var mapString = ""
+    var mediaURL =  ""
+    var objectID = ""
+    var uniqueKey =  ""
+    var updatedAt = ""
     
+    // MARK: Initializers
+    
+    override init() {
+        super.init()
+    }
     
     // MARK: Convenience Functions
     

@@ -63,14 +63,14 @@ extension UdactiyClient {
             
             if registered {
                 
-                self.unique_ID = uniqueID!
+                self.uniqueKey = uniqueID!
                 
                 self.getUserData(uniqueID!) { (sucess, userInfo, errorString) in
                     
                     if sucess {
                         
-                        self.firt_Name = userInfo?["first_name"] as! String
-                        self.last_Name = userInfo?["last_name"] as! String
+                        self.firstName = userInfo?["first_name"] as! String
+                        self.lastName = userInfo?["last_name"] as! String
                         
                         completionHandlerForUserInfo(sucess, nil)
                         
