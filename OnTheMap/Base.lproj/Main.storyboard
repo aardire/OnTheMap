@@ -222,7 +222,11 @@
                         <barButtonItem key="leftBarButtonItem" title="Logout" id="EHX-T5-QO8"/>
                         <rightBarButtonItems>
                             <barButtonItem image="icon_refresh" id="OFB-81-0kk"/>
-                            <barButtonItem image="icon_pin" id="h4y-fc-fMx"/>
+                            <barButtonItem image="icon_pin" id="h4y-fc-fMx">
+                                <connections>
+                                    <segue destination="8AS-4m-yVO" kind="presentation" id="94e-Id-qRK"/>
+                                </connections>
+                            </barButtonItem>
                         </rightBarButtonItems>
                     </navigationItem>
                     <connections>
@@ -371,7 +375,11 @@
                         <barButtonItem key="leftBarButtonItem" title="Logout" id="1DA-OR-i9j"/>
                         <rightBarButtonItems>
                             <barButtonItem image="icon_refresh" id="q1e-sf-SaA"/>
-                            <barButtonItem image="icon_pin" id="AwA-Wk-ZLk"/>
+                            <barButtonItem image="icon_pin" id="AwA-Wk-ZLk">
+                                <connections>
+                                    <segue destination="8AS-4m-yVO" kind="presentation" id="0fg-hR-dJq"/>
+                                </connections>
+                            </barButtonItem>
                         </rightBarButtonItems>
                     </navigationItem>
                     <connections>
@@ -392,4 +400,7 @@
         <image name="icon_refresh" width="24" height="24"/>
         <image name="logo-u" width="62" height="62"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="0fg-hR-dJq"/>
+    </inferredMetricsTieBreakers>
 </document>
