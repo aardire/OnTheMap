@@ -52,13 +52,13 @@ class LoginViewController: UIViewController {
         } else {
             setUIEnabled(false)
             
-            UdactiyClient.sharedInstance().getRegistration(parameters) { (registration, error) in
+            UdactiyClient.sharedInstance().getUdacityUserInfo(parameters) { (sucess, error) in
                 
                 performUIUpdatesOnMain {
-                    if registration {
+                    if sucess {
                         self.completeLogin()
                     } else {
-                        self.displayError(error)
+                        self.displayError(error!)
                     }
                 }
                 

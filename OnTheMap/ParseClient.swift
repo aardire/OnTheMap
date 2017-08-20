@@ -158,7 +158,7 @@ class ParseClient : NSObject {
     }
     
     // create a URL from parameters
-    func parseURLFromParameters(_ parameters: [String:AnyObject], withPathExtension: String? = nil) -> URL {
+    func parseURLFromParameters(_ parameters: [String:AnyObject], withPathExtension: String?) -> URL {
         
         var components = URLComponents()
         components.scheme = ParseClient.Constants.ApiScheme

@@ -14,39 +14,73 @@ extension UdactiyClient {
     
     
     // MARK: get registration and unique ID 
-    func getUdactiyAccount(_ parameters: [String: String], completionHandlerForUdactiyAccount: @escaping (_ registration: Bool?,_ uniqueKey: String?, _ errorString: String?) -> Void) {
+    private func authUdactiyAccount(_ parameters: [String: String]?, completionHandlerForUdactiyAccount: @escaping (_ registration: Bool,_ uniqueKey: String?, _ errorString: String?) -> Void) {
         
         let _ = taskForUdacityPOST(parameters) { (results, error) in
             
-            guard let accountInfo = results?["account"] as? [String:Any] else {
-                completionHandlerForUdactiyAccount(nil,nil,"Error Retrieving Account Information")
-                return
+            if let error = error {
+                print(error)
+                completionHandlerForUdactiyAccount(false, nil, "Login Failed (return error)")
+            } else {
+                if let accountInfo = results?["account"] as? [String: AnyObject] {
+                    if let registration = accountInfo["registered"] as? Bool {
+                        if let uniqueKey = accountInfo["key"] as? String {
+                            completionHandlerForUdactiyAccount(registration,uniqueKey,nil)
+                        } else {
+                            completionHandlerForUdactiyAccount(registration,nil, "unique key error")
+                        }
+                    } else {
+                        completionHandlerForUdactiyAccount(false,nil,"registration error")
+                    }
+                } else {
+                    completionHandlerForUdactiyAccount(false,nil,"accountInfo error")
+                }
             }
-            
-            guard let registration = accountInfo["registered"] as? Bool else {
-                completionHandlerForUdactiyAccount(nil,nil, "Error Retrieving Registration Information")
-                return
-            }
-            
-            guard let uniqueKey = accountInfo["key"] as? String else {
-                completionHandlerForUdactiyAccount(nil,nil,"Error Retrieving UniqueKey")
-                return
-            }
-            
-            completionHandlerForUdactiyAccount(registration,uniqueKey,nil)
         }
     }
     
-    func getUserData(_ uniqueKey: String, _ completionHandlerForUserData) {
+    
+    private func getUserData(_ uniqueKey: String, _ completionHandlerForUserData: @escaping (_ sucess: Bool, _ results: [String:AnyObject]?, _ errorString: String?) -> Void) {
         
         let _ = taskForUdacityGET(uniqueKey) { (results, error) in
             
-            guard let userInfo = results?["user"] as? [String:Any] else {
-                
+            if let error = error {
+                print(error)
+                completionHandlerForUserData(false,nil,"Unique ID failed")
+            } else {
+                if let userInfo = results?["user"] as? [String:AnyObject] {
+                    completionHandlerForUserData(true,userInfo,nil)
+                } else {
+                    completionHandlerForUserData(false,nil,"error with UserInfo")
+                }
             }
         }
     }
     
-    
+    func getUdacityUserInfo(_ parameters: [String: String]?, completionHandlerForUserInfo: @escaping (_ sucess: Bool, _ errorString: String?) -> Void) {
+        
+        authUdactiyAccount(parameters) { (registered, uniqueID, error) in
+            
+            if registered {
+                
+                self.unique_ID = uniqueID!
+                
+                self.getUserData(uniqueID!) { (sucess, userInfo, errorString) in
+                    
+                    if sucess {
+                        
+                        self.firt_Name = userInfo?["first_name"] as! String
+                        self.last_Name = userInfo?["last_name"] as! String
+                        completionHandlerForUserInfo(sucess, nil)
+                        
+                    } else {
+                        completionHandlerForUserInfo(sucess,errorString)
+                    }
+                }
+            } else {
+                completionHandlerForUserInfo(registered, error)
+            }
+        }
+    }
     
 }

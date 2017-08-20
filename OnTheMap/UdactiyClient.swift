@@ -16,7 +16,9 @@ class UdactiyClient : NSObject {
     
     // shared session
     var session = URLSession.shared
-    var uniqueID: String = ""
+    var unique_ID: String = ""
+    var firt_Name: String = ""
+    var last_Name: String = ""
     
     
     // MARK: Convenience Functions
@@ -24,11 +26,11 @@ class UdactiyClient : NSObject {
     
     // MARK: networking functions
     
-    func taskForUdacityPOST(_ parameters: [String:String], completionHandlerForPOST: @escaping (_ result: AnyObject?, _ error: NSError?) -> Void) -> URLSessionDataTask  {
+    func taskForUdacityPOST(_ parameters: [String:String]?, completionHandlerForPOST: @escaping (_ result: AnyObject?, _ error: NSError?) -> Void) -> URLSessionDataTask  {
         
        /* 1. Set the parameters */
-        let userName = parameters["username"]
-        let userPassword = parameters["password"] 
+        let userName = parameters?["username"]
+        let userPassword = parameters?["password"]
         
         /* 2/3. Build the URL, Configure the request */
         let request = NSMutableURLRequest(url: URL(string: "https://www.udacity.com/api/session")!)
@@ -76,9 +78,9 @@ class UdactiyClient : NSObject {
         return task
     }
     
-    func taskForUdacityGET(_ uniqueID: String, completionHandlerForPOST: @escaping (_ result: AnyObject?, _ error: NSError?) -> Void) -> URLSessionDataTask  {
+    func taskForUdacityGET(_ uniqueID: String?, completionHandlerForPOST: @escaping (_ result: AnyObject?, _ error: NSError?) -> Void) -> URLSessionDataTask  {
         
-        let request = NSMutableURLRequest(url: URL(string: "https://www.udacity.com/api/users/\(uniqueID)")!)
+        let request = NSMutableURLRequest(url: URL(string: "https://www.udacity.com/api/users/\(uniqueID!)")!)
         
         /* 4. Make the request */
         let task = session.dataTask(with: request as URLRequest) { data, response, error in
@@ -117,6 +119,30 @@ class UdactiyClient : NSObject {
         /* 7. Start the request */
         task.resume()
         return task
+    }
+    
+    func udactiySessionDELETE () {
+        
+        let request = NSMutableURLRequest(url: URL(string: "https://www.udacity.com/api/session")!)
+        request.httpMethod = "DELETE"
+        var xsrfCookie: HTTPCookie? = nil
+        let sharedCookieStorage = HTTPCookieStorage.shared
+        for cookie in sharedCookieStorage.cookies! {
+            if cookie.name == "XSRF-TOKEN" { xsrfCookie = cookie }
+        }
+        if let xsrfCookie = xsrfCookie {
+            request.setValue(xsrfCookie.value, forHTTPHeaderField: "X-XSRF-TOKEN")
+        }
+        let session = URLSession.shared
+        let task = session.dataTask(with: request as URLRequest) { data, response, error in
+            if error != nil { // Handle error…
+                return
+            }
+            let range = Range(5..<data!.count)
+            let newData = data?.subdata(in: range) /* subset response data! */
+            print(NSString(data: newData!, encoding: String.Encoding.utf8.rawValue)!)
+        }
+        task.resume()
     }
     
     

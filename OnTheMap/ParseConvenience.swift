@@ -13,10 +13,12 @@ import UIKit
 extension ParseClient {
     
     
-    private func getStudentLocation(_ numOfStudents: Int?, completionHandlerForStudentLocations: @escaping (_ students: [StudentLocation]?, _ error: NSError?) -> Void ) {
+    private func getStudentLocation(_ numOfStudents: Int,_ skip: Int, completionHandlerForStudentLocations: @escaping (_ students: [StudentLocation]?, _ error: NSError?) -> Void ) {
         
         /* Specify Parameters for taskforGet */
-        let parameters = [ParseClient.Parameters.Limit: numOfStudents! as AnyObject]
+        var parameters = [String: AnyObject]()
+        parameters[ParseClient.Parameters.Limit] = numOfStudents as AnyObject
+        parameters[ParseClient.Parameters.Skip] = skip as AnyObject
         
         let _ = taskForGetMethod(parameters) { (studentLocations, error) in
             
@@ -24,9 +26,10 @@ extension ParseClient {
                 print(error)
                 completionHandlerForStudentLocations(nil,error)
             } else {
-                if let results = studentLocations?[ParseClient.ResponseKeys.Results] as? [[String:Any]] {
+                if let results = studentLocations?[ParseClient.ResponseKeys.Results] as? [[String:AnyObject]] {
                     
                     let students = StudentLocation.studentsFromResults(results)
+                    print(students)
                     completionHandlerForStudentLocations(students,nil)
                 } else {
                     completionHandlerForStudentLocations(nil,NSError(domain: "getStudentLocation parsing", code: 0, userInfo: [NSLocalizedDescriptionKey: "Could not parse getStudentLocation"]))
@@ -37,7 +40,7 @@ extension ParseClient {
     
     func createStudentsDictionary(_ completionHandlerForAnnotations: @escaping (_ students: [StudentLocation]?,_ error: NSError?) -> Void) {
         
-        getStudentLocation(100) { (studentsDict, error) in
+        getStudentLocation(100,200) { (studentsDict, error) in
             
             if let error = error {
                 print(error)

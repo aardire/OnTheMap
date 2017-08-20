@@ -41,6 +41,7 @@ extension ParseClient {
     struct Parameters {
         static let Limit = "limit"
         static let Where = "where"
+        static let Skip = "skip"
     }
     
     struct Methods {
