@@ -14,7 +14,7 @@ extension UdactiyClient {
     
     
     // MARK: get registration and unique ID 
-    private func authUdactiyAccount(_ parameters: [String: String]?, completionHandlerForUdactiyAccount: @escaping (_ registration: Bool,_ uniqueKey: String?, _ errorString: String?) -> Void) {
+    private func authUdactiyAccount(_ parameters: [String: String], completionHandlerForUdactiyAccount: @escaping (_ registration: Bool,_ uniqueKey: String?, _ errorString: String?) -> Void) {
         
         let _ = taskForUdacityPOST(parameters) { (results, error) in
             
@@ -57,7 +57,7 @@ extension UdactiyClient {
         }
     }
     
-    func getUdacityUserInfo(_ parameters: [String: String]?, completionHandlerForUserInfo: @escaping (_ sucess: Bool, _ errorString: String?) -> Void) {
+    func getUdacityUserInfo(_ parameters: [String: String], completionHandlerForUserInfo: @escaping (_ sucess: Bool, _ errorString: String?) -> Void) {
         
         authUdactiyAccount(parameters) { (registered, uniqueID, error) in
             

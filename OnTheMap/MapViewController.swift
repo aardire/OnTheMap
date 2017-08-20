@@ -13,7 +13,6 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     
     // MARK: Properties
     
-    var students: [StudentLocation] = [StudentLocation]()
     
     // MARK: Outlets 
     @IBOutlet weak var mapView: MKMapView!

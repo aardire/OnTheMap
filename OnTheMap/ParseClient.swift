@@ -26,7 +26,7 @@ class ParseClient : NSObject {
     
     // MARK: GET
     
-    func taskForGetMethod(_ parameters: [String:AnyObject], completionHandlerForGET: @escaping (_ result: AnyObject?, _ error: NSError?) -> Void) -> URLSessionDataTask {
+    func taskForGetMethod(_ parameters: [String:Any], completionHandlerForGET: @escaping (_ result: AnyObject?, _ error: NSError?) -> Void) -> URLSessionDataTask {
         
         /* 1. Set the parameters */
         
@@ -71,7 +71,7 @@ class ParseClient : NSObject {
         return task
     }
     
-    func taskForPostMethod(_ parameters: [String:AnyObject], jsonBody: String, completionHandlerForPOST: @escaping (_ result: AnyObject?, _ error: NSError?) -> Void) -> URLSessionDataTask {
+    func taskForPostMethod(_ parameters: [String:Any], jsonBody: String, completionHandlerForPOST: @escaping (_ result: AnyObject?, _ error: NSError?) -> Void) -> URLSessionDataTask {
         
         /* 1. Set the parameters */
         
@@ -158,7 +158,7 @@ class ParseClient : NSObject {
     }
     
     // create a URL from parameters
-    func parseURLFromParameters(_ parameters: [String:AnyObject], withPathExtension: String?) -> URL {
+    func parseURLFromParameters(_ parameters: [String:Any], withPathExtension: String?) -> URL {
         
         var components = URLComponents()
         components.scheme = ParseClient.Constants.ApiScheme

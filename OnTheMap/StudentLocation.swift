@@ -25,7 +25,7 @@ struct StudentLocation {
     // MARK: Initializers
     // --- construct a studentlocation from a dictionary
     
-    init(dictionary: [String:AnyObject]) {
+    init(dictionary: [String:Any]) {
         createdAt = dictionary[ParseClient.ResponseKeys.CreatedAt] as! String
         firstName = dictionary[ParseClient.ResponseKeys.FirstName] as! String
         lastName = dictionary[ParseClient.ResponseKeys.LastName] as! String
@@ -38,7 +38,7 @@ struct StudentLocation {
         updatedAt = dictionary[ParseClient.ResponseKeys.UpdatedAt] as! String
     }
     
-    static func studentsFromResults(_ results:[[String:AnyObject]]) -> [StudentLocation] {
+    static func studentsFromResults(_ results:[[String:Any]]) -> [StudentLocation] {
         
         var studentLocation = [StudentLocation]()
         
