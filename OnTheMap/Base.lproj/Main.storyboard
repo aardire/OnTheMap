@@ -246,7 +246,7 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
-                        <segue destination="HCn-Zf-aj5" kind="relationship" relationship="rootViewController" id="6ll-g5-Rnt"/>
+                        <segue destination="Fdv-IR-81Q" kind="relationship" relationship="rootViewController" id="shM-et-jcp"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HPW-cA-n0F" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -254,81 +254,81 @@
             <point key="canvasLocation" x="1835" y="-316"/>
         </scene>
         <!--Information Posting View Controller-->
-        <scene sceneID="WAL-GL-hTx">
+        <scene sceneID="MWD-Br-J7r">
             <objects>
-                <viewController id="HCn-Zf-aj5" customClass="InformationPostingViewController" customModule="OnTheMap" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="Fdv-IR-81Q" customClass="InformationPostingViewController" customModule="OnTheMap" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="v9h-4o-g1T"/>
-                        <viewControllerLayoutGuide type="bottom" id="UUe-S3-auU"/>
+                        <viewControllerLayoutGuide type="top" id="14Z-tB-Q59"/>
+                        <viewControllerLayoutGuide type="bottom" id="lOO-9b-NNv"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="aSq-D8-cBO">
+                    <view key="view" contentMode="scaleToFill" id="ptN-fS-RRx">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="j3f-2Y-IOM">
-                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="jrs-Dy-Co4">
+                                <rect key="frame" x="0.0" y="72" width="375" height="595"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6NJ-jr-Ift">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="89"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EEn-Zd-cR9">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="150"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="150" id="pJR-sK-eaA"/>
+                                        </constraints>
                                         <attributedString key="attributedText">
-                                            <fragment content="Where are you ">
+                                            <fragment content="Where Are You Studying Today?">
                                                 <attributes>
-                                                    <font key="NSFont" size="38" name=".SFNSDisplay-Regular"/>
-                                                    <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                                </attributes>
-                                            </fragment>
-                                            <fragment content="studying">
-                                                <attributes>
-                                                    <font key="NSFont" size="38" name=".SFNSDisplay-Bold"/>
-                                                    <font key="NSOriginalFont" size="38" name=".SFNSDisplay-Bold"/>
-                                                    <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                                </attributes>
-                                            </fragment>
-                                            <fragment content=" today?">
-                                                <attributes>
-                                                    <font key="NSFont" size="38" name=".SFNSDisplay-Regular"/>
+                                                    <font key="NSFont" size="36" name=".AppleSystemUIFont"/>
                                                     <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                                 </attributes>
                                             </fragment>
                                         </attributedString>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="kdh-4f-aLm">
-                                        <rect key="frame" x="0.0" y="89" width="375" height="453"/>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                                    </textView>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WSn-qY-7Q6">
-                                        <rect key="frame" x="0.0" y="542" width="375" height="61"/>
-                                        <state key="normal" title="Find On The Map"/>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" usesAttributedText="YES" borderStyle="roundedRect" placeholder="Enter Location" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="p92-Tz-h8p">
+                                        <rect key="frame" x="0.0" y="155" width="375" height="100"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="100" id="GiQ-gE-ilB"/>
+                                        </constraints>
+                                        <attributedString key="attributedText"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                    <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="VAc-Tm-KPD">
+                                        <rect key="frame" x="0.0" y="260" width="375" height="250"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="250" id="icA-tm-Zo3"/>
+                                        </constraints>
                                         <connections>
-                                            <action selector="geocode:" destination="HCn-Zf-aj5" eventType="touchUpInside" id="FLW-Vr-bEh"/>
+                                            <outlet property="delegate" destination="Fdv-IR-81Q" id="FYr-aB-VKQ"/>
                                         </connections>
+                                    </mapView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7gI-JE-CAS">
+                                        <rect key="frame" x="0.0" y="515" width="375" height="80"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="80" id="qXj-kP-xRx"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="21"/>
+                                        <state key="normal" title="Find On The Map"/>
                                     </button>
                                 </subviews>
                             </stackView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="UUe-S3-auU" firstAttribute="top" secondItem="j3f-2Y-IOM" secondAttribute="bottom" id="ksk-Ky-gva"/>
-                            <constraint firstItem="j3f-2Y-IOM" firstAttribute="leading" secondItem="aSq-D8-cBO" secondAttribute="leading" id="qkV-Pv-8Gn"/>
-                            <constraint firstItem="j3f-2Y-IOM" firstAttribute="top" secondItem="v9h-4o-g1T" secondAttribute="bottom" id="vxt-Td-fhK"/>
-                            <constraint firstAttribute="trailing" secondItem="j3f-2Y-IOM" secondAttribute="trailing" id="xfP-Xt-3Nx"/>
+                            <constraint firstItem="lOO-9b-NNv" firstAttribute="top" secondItem="jrs-Dy-Co4" secondAttribute="bottom" id="19M-Xl-TKx"/>
+                            <constraint firstAttribute="trailing" secondItem="jrs-Dy-Co4" secondAttribute="trailing" id="5oW-92-2VO"/>
+                            <constraint firstItem="jrs-Dy-Co4" firstAttribute="top" secondItem="14Z-tB-Q59" secondAttribute="bottom" constant="8" id="Isr-qO-twX"/>
+                            <constraint firstItem="jrs-Dy-Co4" firstAttribute="leading" secondItem="ptN-fS-RRx" secondAttribute="leading" id="oTp-Mz-ht8"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="BXW-9H-LPw">
-                        <barButtonItem key="rightBarButtonItem" systemItem="cancel" id="rcr-Li-UNx"/>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" id="Rxv-Tg-KEy"/>
                     <connections>
-                        <outlet property="findLocationButton" destination="WSn-qY-7Q6" id="yG2-9Y-KMx"/>
-                        <outlet property="geocodeButton" destination="WSn-qY-7Q6" id="f1g-CT-WfX"/>
-                        <outlet property="textView" destination="kdh-4f-aLm" id="Axo-ry-H3z"/>
+                        <outlet property="geocodeButton" destination="7gI-JE-CAS" id="brM-3d-zPx"/>
+                        <outlet property="mapView" destination="VAc-Tm-KPD" id="GEh-pI-uO1"/>
+                        <outlet property="textView" destination="p92-Tz-h8p" id="cLm-UZ-wyu"/>
                     </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="gxG-o5-faF" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="buX-q5-jOl" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2669.5999999999999" y="-315.29235382308849"/>
+            <point key="canvasLocation" x="2754.4000000000001" y="-307.1964017991005"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="qOM-VY-Z0y">
