@@ -48,7 +48,29 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         }
     }
     
-
+// MARK: Refresh Button 
+    
+    @IBAction func refreshButton(_ sender: Any) {
+        
+        performUIUpdatesOnMain {
+            self.mapView.reloadInputViews()
+        }
+    }
+    
+    @IBAction func logoutButton(_ sender: Any) {
+        
+        UdactiyClient.sharedInstance().udactiySessionDELETE() {(success,error) in
+            
+            if success {
+                performUIUpdatesOnMain {
+                    let controller = self.storyboard!.instantiateViewController(withIdentifier: "LoginViewController")
+                    self.present(controller, animated: true, completion: nil)
+                }
+            }
+            
+        }
+    }
+    
     
     // MARK: MKMapViewDelegate
     

@@ -14,7 +14,7 @@
         <!--Login View Controller-->
         <scene sceneID="0CT-gm-PrW">
             <objects>
-                <viewController id="KTj-22-HaE" customClass="LoginViewController" customModule="OnTheMap" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="LoginViewController" id="KTj-22-HaE" customClass="LoginViewController" customModule="OnTheMap" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="GP1-f4-AWc"/>
                         <viewControllerLayoutGuide type="bottom" id="GjG-HG-MHM"/>
@@ -227,9 +227,17 @@
                     </view>
                     <tabBarItem key="tabBarItem" title="" selectedImage="icon_mapview-selected" id="UvO-Bb-AIW"/>
                     <navigationItem key="navigationItem" title="Map View" id="7Wi-xy-Q38">
-                        <barButtonItem key="leftBarButtonItem" title="Logout" id="EHX-T5-QO8"/>
+                        <barButtonItem key="leftBarButtonItem" title="Logout" id="EHX-T5-QO8">
+                            <connections>
+                                <action selector="logoutButton:" destination="sQ3-b8-Myu" id="pQF-5E-GH9"/>
+                            </connections>
+                        </barButtonItem>
                         <rightBarButtonItems>
-                            <barButtonItem image="icon_refresh" id="OFB-81-0kk"/>
+                            <barButtonItem image="icon_refresh" id="OFB-81-0kk">
+                                <connections>
+                                    <action selector="refreshButton:" destination="sQ3-b8-Myu" id="fId-eg-24k"/>
+                                </connections>
+                            </barButtonItem>
                             <barButtonItem image="icon_pin" id="h4y-fc-fMx">
                                 <connections>
                                     <segue destination="Fdv-IR-81Q" kind="presentation" id="ap2-6i-M6f"/>
@@ -473,7 +481,7 @@
                                 <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="NIa-6Z-9P2" id="eGO-Qs-lxh">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
                             </tableViewCell>
@@ -485,9 +493,17 @@
                     </tableView>
                     <tabBarItem key="tabBarItem" title="" selectedImage="icon_listview-selected" id="jiV-Gt-9eX"/>
                     <navigationItem key="navigationItem" title="Table View" id="eYN-2s-EzM">
-                        <barButtonItem key="leftBarButtonItem" title="Logout" id="1DA-OR-i9j"/>
+                        <barButtonItem key="leftBarButtonItem" title="Logout" id="1DA-OR-i9j">
+                            <connections>
+                                <action selector="logoutButton:" destination="CpQ-24-xgz" id="hKL-cg-XRg"/>
+                            </connections>
+                        </barButtonItem>
                         <rightBarButtonItems>
-                            <barButtonItem image="icon_refresh" id="q1e-sf-SaA"/>
+                            <barButtonItem image="icon_refresh" id="q1e-sf-SaA">
+                                <connections>
+                                    <action selector="refreshButton:" destination="CpQ-24-xgz" id="K6A-Pu-2Lx"/>
+                                </connections>
+                            </barButtonItem>
                             <barButtonItem image="icon_pin" id="AwA-Wk-ZLk">
                                 <connections>
                                     <segue destination="Fdv-IR-81Q" kind="presentation" id="buE-Ir-H36"/>
@@ -514,6 +530,6 @@
         <image name="logo-u" width="62" height="62"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="buE-Ir-H36"/>
+        <segue reference="ap2-6i-M6f"/>
     </inferredMetricsTieBreakers>
 </document>

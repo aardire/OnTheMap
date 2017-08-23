@@ -120,7 +120,7 @@ class UdactiyClient : NSObject {
         return task
     }
     
-    func udactiySessionDELETE () {
+    func udactiySessionDELETE(_ completionHandlerDELETE: @escaping (_ success:Bool,_ error: String?) -> Void) {
         
         let request = NSMutableURLRequest(url: URL(string: "https://www.udacity.com/api/session")!)
         request.httpMethod = "DELETE"
@@ -140,6 +140,7 @@ class UdactiyClient : NSObject {
             let range = Range(5..<data!.count)
             let newData = data?.subdata(in: range) /* subset response data! */
             print(NSString(data: newData!, encoding: String.Encoding.utf8.rawValue)!)
+            completionHandlerDELETE(true,nil)
         }
         task.resume()
     }

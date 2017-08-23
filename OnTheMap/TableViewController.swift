@@ -43,7 +43,28 @@ class TableViewController: UITableViewController {
     }
     
 
+    @IBAction func refreshButton(_ sender: Any) {
+        
+        performUIUpdatesOnMain {
+            self.studentsTableView.reloadData()
+        }
+    }
 
+    @IBAction func logoutButton(_ sender: Any) {
+        
+        UdactiyClient.sharedInstance().udactiySessionDELETE() {(success,error) in
+            
+            if success {
+                performUIUpdatesOnMain {
+                    let controller = self.storyboard!.instantiateViewController(withIdentifier: "LoginViewController")
+                    self.present(controller, animated: true, completion: nil)
+                }
+            }
+        }
+            
+    }
+    
+    
 // MARK: TableViewController : UITableViewDelegate, UITableViewDataSource
 
     
