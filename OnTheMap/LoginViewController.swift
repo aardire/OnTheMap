@@ -12,6 +12,8 @@ import UIKit
 class LoginViewController: UIViewController, UITextFieldDelegate {
     
     // MARK: Properties
+    var userName:String?
+    var userPassword: String?
     var keyboardOnScreen = false
     
     // MARK: Outlets
@@ -21,7 +23,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var loginButton: UIButton!
     @IBOutlet weak var signUpButton: UIButton!
     @IBOutlet weak var udacityLogoImageView: UIImageView!
-    @IBOutlet weak var debugTextLabel: UILabel!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     override func viewDidLoad() {
@@ -41,10 +42,10 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         
         startNetworkActivity()
         
-        let userName = usernameTextField.text!
-        let userPassword = passwordTextField.text!
+        self.userName = usernameTextField.text!
+        self.userPassword = passwordTextField.text!
         
-        guard userName.isEmpty == false && userPassword.isEmpty == false else {
+        guard self.userName?.isEmpty == false && self.userPassword?.isEmpty == false else {
             showAlert(sender, message: UdactiyClient.ErrorMessages.noInputError)
             return
         }
@@ -58,7 +59,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             }
         }
             
-        UdactiyClient.sharedInstance().getUdacityUserInfo(userName,userPassword) { (sucess, error) in
+        UdactiyClient.sharedInstance().getUdacityUserInfo(self.userName!,self.userPassword!) { (sucess, error) in
             
             guard sucess else {
                 performUIUpdatesOnMain {

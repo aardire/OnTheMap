@@ -19,6 +19,7 @@ class InformationPostingViewController: UIViewController, UITextFieldDelegate {
     
     var coordinates: CLLocationCoordinate2D?
     lazy var geocoder = CLGeocoder()
+    var keyboardOnScreen = false
     
     override func viewDidLoad() {
         super.viewDidLoad()

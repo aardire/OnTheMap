@@ -10,24 +10,23 @@ import UIKit
 import MapKit
 import CoreLocation
 
-class AddPinViewController: UIViewController, UITextViewDelegate {
+class AddPinViewController: UIViewController, UITextFieldDelegate {
     
     
     @IBOutlet weak var newPinMap: MKMapView!
-    @IBOutlet weak var addUrlText: UITextView!
+    @IBOutlet weak var addUrlText: UITextField!
     @IBOutlet weak var submitButton: CustomButton!
     
     var inputCoordinates: CLLocationCoordinate2D?
     var lat: CLLocationDegrees?
     var long: CLLocationDegrees?
     var geocodedLocation: String?
+    var keyboardOnScreen = false
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.sendSubview(toBack: newPinMap)
-        view.bringSubview(toFront: addUrlText)
-        view.bringSubview(toFront: submitButton)
+       
         addUrlText.delegate = self
         performUIUpdatesOnMain {
             self.addLocationPin(self.inputCoordinates!)
@@ -61,12 +60,10 @@ class AddPinViewController: UIViewController, UITextViewDelegate {
   
     
     //MARK: Cancel button tapped
-    @IBAction func cancelButtonPressed(_ sender: Any) {
+    @IBAction func cancelButton(_ sender: Any) {
         self.presentingViewController?.presentingViewController?.dismiss(animated: true, completion: nil)
     }
-    
-    
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setupViewResizerOnKeyboardShown()

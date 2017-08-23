@@ -11,9 +11,9 @@ import UIKit
 extension UdactiyClient {
     
     // MARK: get registration and unique ID
-    private func authUdactiyAccount(_ userName: String,_ userPassword: String, completionHandlerForUdactiyAccount: @escaping (_ registration: Bool,_ uniqueKey: String?, _ errorString: String?) -> Void) {
+    private func authUdactiyAccount(_ userName: String?,_ userPassword: String?, completionHandlerForUdactiyAccount: @escaping (_ registration: Bool,_ uniqueKey: String?, _ errorString: String?) -> Void) {
         
-        let _ = taskForUdacityPOST(userName,userPassword) { (results, error) in
+        let _ = taskForUdacityPOST(userName!,userPassword!) { (results, error) in
             
             if let error = error {
                 print(error)
@@ -54,9 +54,9 @@ extension UdactiyClient {
         }
     }
     
-    func getUdacityUserInfo(_ userName: String,_ userPassword: String, completionHandlerForUserInfo: @escaping (_ sucess: Bool, _ errorString: String?) -> Void) {
+    func getUdacityUserInfo(_ userName: String?,_ userPassword: String?, completionHandlerForUserInfo: @escaping (_ sucess: Bool, _ errorString: String?) -> Void) {
         
-        authUdactiyAccount(userName,userPassword) { (registered, uniqueID, error) in
+        authUdactiyAccount(userName!,userPassword!) { (registered, uniqueID, error) in
             
             if registered {
                 
