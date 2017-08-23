@@ -112,7 +112,7 @@
                                 <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="TN6-nU-R22">
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="TN6-nU-R22">
                                 <rect key="frame" x="178" y="491" width="37" height="37"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </activityIndicatorView>
@@ -148,6 +148,7 @@
                         </connections>
                     </view>
                     <connections>
+                        <outlet property="activityIndicator" destination="TN6-nU-R22" id="dbP-Oa-Yrd"/>
                         <outlet property="debugTextLabel" destination="McD-oY-MGb" id="gWe-nw-vHh"/>
                         <outlet property="loginButton" destination="B9K-MW-tFw" id="bBZ-re-B6y"/>
                         <outlet property="passwordTextField" destination="TVL-rG-mPd" id="8Gp-gH-EaA"/>
@@ -273,14 +274,18 @@
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                                         <items>
                                             <navigationItem title="Title" id="X5E-Ei-J27">
-                                                <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="wYs-4B-xln"/>
+                                                <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="wYs-4B-xln">
+                                                    <connections>
+                                                        <action selector="cancelButton:" destination="Fdv-IR-81Q" id="6Sr-2t-8p8"/>
+                                                    </connections>
+                                                </barButtonItem>
                                             </navigationItem>
                                         </items>
                                     </navigationBar>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hJs-wu-Lrg">
                                         <rect key="frame" x="0.0" y="202" width="375" height="250"/>
                                         <subviews>
-                                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="UoB-tf-mKt">
+                                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="UoB-tf-mKt">
                                                 <rect key="frame" x="169" y="176" width="37" height="37"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             </activityIndicatorView>
@@ -311,7 +316,7 @@
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7gI-JE-CAS">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7gI-JE-CAS" customClass="CustomButton" customModule="OnTheMap" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="460" width="375" height="80"/>
                                         <constraints>
                                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="80" id="kOU-bG-lKe"/>
@@ -319,6 +324,9 @@
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="21"/>
                                         <state key="normal" title="Find On The Map"/>
+                                        <connections>
+                                            <action selector="findButton:" destination="Fdv-IR-81Q" eventType="touchUpInside" id="GcB-c3-FT8"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
@@ -348,7 +356,10 @@
                     </view>
                     <navigationItem key="navigationItem" id="Rxv-Tg-KEy"/>
                     <connections>
+                        <outlet property="activityIndicator" destination="UoB-tf-mKt" id="Ig0-7a-QyV"/>
+                        <outlet property="findButton" destination="7gI-JE-CAS" id="Ilz-HL-N1p"/>
                         <outlet property="geocodeButton" destination="7gI-JE-CAS" id="brM-3d-zPx"/>
+                        <outlet property="locationInput" destination="p92-Tz-h8p" id="eIp-DF-BMw"/>
                         <outlet property="textView" destination="p92-Tz-h8p" id="cLm-UZ-wyu"/>
                         <segue destination="DQz-bN-lYu" kind="presentation" identifier="AddPin" id="XY2-RU-oUX"/>
                     </connections>
@@ -357,10 +368,10 @@
             </objects>
             <point key="canvasLocation" x="2432.8000000000002" y="-291.00449775112446"/>
         </scene>
-        <!--View Controller-->
+        <!--Add Pin View Controller-->
         <scene sceneID="Wee-o0-cRc">
             <objects>
-                <viewController id="DQz-bN-lYu" sceneMemberID="viewController">
+                <viewController id="DQz-bN-lYu" customClass="AddPinViewController" customModule="OnTheMap" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="ecB-34-pO6"/>
                         <viewControllerLayoutGuide type="bottom" id="lOf-cv-dRK"/>
@@ -370,13 +381,27 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="Ggc-In-hA7">
-                                <rect key="frame" x="0.0" y="20" width="375" height="647"/>
+                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                             </mapView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Q7D-wr-uim" customClass="CustomButton" customModule="OnTheMap" customModuleProvider="target">
+                                <rect key="frame" x="133" y="545" width="108" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="21"/>
+                                <state key="normal" title="Submit"/>
+                                <connections>
+                                    <action selector="submitButton:" destination="DQz-bN-lYu" eventType="touchDragInside" id="SaP-vn-BYX"/>
+                                </connections>
+                            </button>
+                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cP7-qT-lRn">
+                                <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                                <items>
+                                    <navigationItem title="Title" id="aeZ-vt-QJr"/>
+                                </items>
+                            </navigationBar>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jeU-tq-e1P">
-                                <rect key="frame" x="0.0" y="20" width="375" height="219"/>
+                                <rect key="frame" x="0.0" y="64" width="375" height="174"/>
                                 <subviews>
                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Enter URL Here" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="m64-qS-Uy9">
-                                        <rect key="frame" x="24" y="45" width="327" height="129"/>
+                                        <rect key="frame" x="24" y="33" width="327" height="104"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="21"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
@@ -384,38 +409,41 @@
                                 </subviews>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstItem="m64-qS-Uy9" firstAttribute="top" secondItem="jeU-tq-e1P" secondAttribute="top" constant="45" id="MZ9-I5-Eff"/>
+                                    <constraint firstItem="m64-qS-Uy9" firstAttribute="top" secondItem="jeU-tq-e1P" secondAttribute="top" constant="33" id="MZ9-I5-Eff"/>
                                     <constraint firstItem="m64-qS-Uy9" firstAttribute="centerX" secondItem="jeU-tq-e1P" secondAttribute="centerX" id="WiD-cO-1fv"/>
                                     <constraint firstAttribute="trailing" secondItem="m64-qS-Uy9" secondAttribute="trailing" constant="24" id="iGK-E8-wxJ"/>
                                     <constraint firstItem="m64-qS-Uy9" firstAttribute="leading" secondItem="jeU-tq-e1P" secondAttribute="leading" constant="24" id="kQJ-Id-8cx"/>
-                                    <constraint firstItem="m64-qS-Uy9" firstAttribute="centerY" secondItem="jeU-tq-e1P" secondAttribute="centerY" id="mOM-SS-H3Y"/>
-                                    <constraint firstAttribute="bottom" secondItem="m64-qS-Uy9" secondAttribute="bottom" constant="45" id="zco-IJ-pY9"/>
+                                    <constraint firstItem="m64-qS-Uy9" firstAttribute="centerY" secondItem="jeU-tq-e1P" secondAttribute="centerY" constant="-2" id="mOM-SS-H3Y"/>
+                                    <constraint firstAttribute="bottom" secondItem="m64-qS-Uy9" secondAttribute="bottom" constant="37" id="zco-IJ-pY9"/>
                                 </constraints>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Q7D-wr-uim">
-                                <rect key="frame" x="133" y="545" width="108" height="30"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="21"/>
-                                <state key="normal" title="Submit"/>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstAttribute="trailing" secondItem="cP7-qT-lRn" secondAttribute="trailing" id="0Ud-Gr-aLr"/>
                             <constraint firstItem="lOf-cv-dRK" firstAttribute="top" secondItem="Q7D-wr-uim" secondAttribute="bottom" constant="92" id="1sl-ya-WeU"/>
                             <constraint firstItem="jeU-tq-e1P" firstAttribute="centerX" secondItem="kuj-i6-H1X" secondAttribute="centerX" id="2S1-vo-joa"/>
                             <constraint firstAttribute="trailingMargin" secondItem="jeU-tq-e1P" secondAttribute="trailing" constant="-16" id="8qX-88-6G4"/>
                             <constraint firstItem="Ggc-In-hA7" firstAttribute="leading" secondItem="kuj-i6-H1X" secondAttribute="leading" id="Bgc-nk-jjc"/>
                             <constraint firstAttribute="trailingMargin" secondItem="Q7D-wr-uim" secondAttribute="trailing" constant="118" id="Bgj-ty-DAJ"/>
                             <constraint firstItem="jeU-tq-e1P" firstAttribute="leading" secondItem="kuj-i6-H1X" secondAttribute="leadingMargin" constant="-16" id="DPp-if-xJo"/>
+                            <constraint firstItem="cP7-qT-lRn" firstAttribute="leading" secondItem="kuj-i6-H1X" secondAttribute="leading" id="EA7-Xj-KA9"/>
                             <constraint firstItem="Q7D-wr-uim" firstAttribute="top" secondItem="ecB-34-pO6" secondAttribute="bottom" constant="525" id="EJg-r9-TlC"/>
-                            <constraint firstItem="jeU-tq-e1P" firstAttribute="top" secondItem="ecB-34-pO6" secondAttribute="bottom" id="PLF-jh-lEA"/>
-                            <constraint firstItem="lOf-cv-dRK" firstAttribute="top" secondItem="jeU-tq-e1P" secondAttribute="bottom" constant="428" id="Re3-R4-UVK"/>
+                            <constraint firstItem="jeU-tq-e1P" firstAttribute="top" secondItem="ecB-34-pO6" secondAttribute="bottom" constant="44" id="PLF-jh-lEA"/>
+                            <constraint firstItem="lOf-cv-dRK" firstAttribute="top" secondItem="jeU-tq-e1P" secondAttribute="bottom" constant="429" id="Re3-R4-UVK"/>
                             <constraint firstAttribute="trailing" secondItem="Ggc-In-hA7" secondAttribute="trailing" id="VjG-vD-Mbo"/>
-                            <constraint firstItem="Ggc-In-hA7" firstAttribute="top" secondItem="ecB-34-pO6" secondAttribute="bottom" id="eoQ-0n-DHI"/>
+                            <constraint firstItem="Ggc-In-hA7" firstAttribute="top" secondItem="ecB-34-pO6" secondAttribute="bottom" constant="44" id="eoQ-0n-DHI"/>
                             <constraint firstItem="Q7D-wr-uim" firstAttribute="centerX" secondItem="kuj-i6-H1X" secondAttribute="centerX" id="mm4-Zf-qAR"/>
+                            <constraint firstItem="cP7-qT-lRn" firstAttribute="top" secondItem="ecB-34-pO6" secondAttribute="bottom" id="qls-eG-d7E"/>
                             <constraint firstItem="lOf-cv-dRK" firstAttribute="top" secondItem="Ggc-In-hA7" secondAttribute="bottom" id="r6Y-M7-kHJ"/>
                             <constraint firstItem="Q7D-wr-uim" firstAttribute="leading" secondItem="kuj-i6-H1X" secondAttribute="leadingMargin" constant="117" id="xat-Nj-wQm"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="addUrlText" destination="m64-qS-Uy9" id="EUs-Vs-VTt"/>
+                        <outlet property="newPinMap" destination="Ggc-In-hA7" id="NSV-Ix-AsG"/>
+                        <outlet property="submitButton" destination="Q7D-wr-uim" id="J9Y-GE-itU"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SwM-Ym-Cqg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import MapKit
 
 // MARK: -ParseClient : NSObject
 
@@ -71,53 +72,30 @@ class ParseClient : NSObject {
         return task
     }
     
-    func taskForPostMethod(_ parameters: [String:Any], jsonBody: String, completionHandlerForPOST: @escaping (_ result: AnyObject?, _ error: NSError?) -> Void) -> URLSessionDataTask {
+    //MARK: Function to add new student location.
+    func addNewStudent(mapString: String, mediaURL: String, latitude: CLLocationDegrees, longitude: CLLocationDegrees, completionHandler:  @escaping (_ success: Bool, _ errorMessage: String?) -> Void) {
         
-        /* 1. Set the parameters */
+        let key = User.Information.UniqueKey
+        let first = User.Information.FirstName
+        let last = User.Information.LastName
         
-        /* 2/3. Build the URL, Configure the request */
-        let request = NSMutableURLRequest(url: parseURLFromParameters(parameters, withPathExtension: nil))
+        let request = NSMutableURLRequest(url: URL(string: "https://parse.udacity.com/parse/classes/StudentLocation")!)
         request.httpMethod = "POST"
         request.addValue(ParseClient.Constants.ParseApplicationID, forHTTPHeaderField: "X-Parse-Application-Id")
         request.addValue(ParseClient.Constants.RESTApiKey, forHTTPHeaderField: "X-Parse-REST-API-Key")
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.httpBody = jsonBody.data(using: String.Encoding.utf8)
+        request.httpBody = "{\"uniqueKey\": \"\(key)\", \"firstName\": \"\(first)\", \"lastName\": \"\(last)\",\"mapString\": \"\(mapString)\", \"mediaURL\": \"\(mediaURL)\",\"latitude\": \(latitude), \"longitude\": \(longitude)}".data(using: String.Encoding.utf8)
         
-        /* 4. Make the request */
-        let task = session.dataTask(with: request as URLRequest) { (data, response, error) in
+        
+        let task = session.dataTask(with: request as URLRequest) { data, response, error in
             
-            func sendError(_ error: String) {
-                print(error)
-                let userInfo = [NSLocalizedDescriptionKey : error]
-                completionHandlerForPOST(nil, NSError(domain: "taskForPOSTMethod", code: 1, userInfo: userInfo))
-            }
-            
-            /* GUARD: Was there an error? */
             guard (error == nil) else {
-                sendError("There was an error with your request: \(error!)")
+                completionHandler(false, UdactiyClient.ErrorMessages.genError)
                 return
             }
-            
-            /* GUARD: Did we get a successful 2XX response? */
-            guard let statusCode = (response as? HTTPURLResponse)?.statusCode, statusCode >= 200 && statusCode <= 299 else {
-                sendError("Your request returned a status code other than 2xx!")
-                return
-            }
-            
-            /* GUARD: Was there any data returned? */
-            guard let data = data else {
-                sendError("No data was returned by the request!")
-                return
-            }
-            
-            /* 5/6. Parse the data and use the data (happens in completion handler) */
-            self.convertDataWithCompletionHandler(data, completionHandlerForConvertData: completionHandlerForPOST)
+            completionHandler(true, nil)
         }
-        
-        /* 7. Start the request */
         task.resume()
-        
-        return task
     }
 
 

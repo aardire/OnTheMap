@@ -29,6 +29,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         
         configureUI()
         setupViewResizerOnKeyboardShown()
+        
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -40,11 +41,10 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         
         startNetworkActivity()
         
-        var parameters = [String:String]()
-        parameters["username"] = usernameTextField.text!
-        parameters["password"] = passwordTextField.text!
+        let userName = usernameTextField.text!
+        let userPassword = passwordTextField.text!
         
-        guard usernameTextField.text!.isEmpty == false && passwordTextField.text!.isEmpty == false else {
+        guard userName.isEmpty == false && userPassword.isEmpty == false else {
             showAlert(sender, message: UdactiyClient.ErrorMessages.noInputError)
             return
         }
@@ -58,7 +58,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             }
         }
             
-        UdactiyClient.sharedInstance().getUdacityUserInfo(parameters) { (sucess, error) in
+        UdactiyClient.sharedInstance().getUdacityUserInfo(userName,userPassword) { (sucess, error) in
             
             guard sucess else {
                 performUIUpdatesOnMain {
@@ -157,6 +157,11 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         usernameTextField.isEnabled = true
         passwordTextField.isEnabled = true
         loginButton.isEnabled = true
+    }
+    
+    //MARK: Change status bar to light color.
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
     }
     
 

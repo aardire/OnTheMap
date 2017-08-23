@@ -13,11 +13,10 @@ import MapKit
 class InformationPostingViewController: UIViewController, UITextFieldDelegate {
     
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
-    @IBOutlet weak var findButton: RoundedButton!
+    @IBOutlet weak var findButton: CustomButton!
     @IBOutlet weak var locationInput: UITextField!
     
     
-    var userLocation: String?
     var coordinates: CLLocationCoordinate2D?
     lazy var geocoder = CLGeocoder()
     
@@ -41,7 +40,7 @@ class InformationPostingViewController: UIViewController, UITextFieldDelegate {
         if segue.identifier == "AddPin" {
             if let addPinController = segue.destination as? AddPinViewController {
                 addPinController.inputCoordinates = coordinates
-                addPinController.geocodedLocation = userLocation
+                addPinController.geocodedLocation = User.Information.MapString
             }
         } else {
             return
@@ -49,23 +48,24 @@ class InformationPostingViewController: UIViewController, UITextFieldDelegate {
     }
     
     //MARK: Find button tapped
-    @IBAction func findButtonPressed(_ sender: Any) {
+    @IBAction func findButton(_ sender: Any) {
+        
         startGeocoding()
         guard locationInput.text!.isEmpty == false else {
-            self.showAlert(findButton!, message: UdacityClient.ErrorMessages.urlInputError)
+            self.showAlert(findButton!, message: UdactiyClient.ErrorMessages.urlInputError)
             return
         }
-        userLocation = locationInput.text!
+        User.Information.MapString = locationInput.text!
         performUIUpdatesOnMain {
-            self.geocodeAddress(self.userLocation!)
-            
+            self.geocodeAddress(User.Information.MapString)
         }
     }
     
     //MARK: Cancel button tapped
-    @IBAction func cancelButtonPressed(_ sender: Any) {
+    @IBAction func cancelButton(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
     }
+    
     
     //MARK: Function to geocode address String
     private func geocodeAddress(_ inputLocation: String) {
@@ -73,7 +73,7 @@ class InformationPostingViewController: UIViewController, UITextFieldDelegate {
             
             if error != nil {
                 self.stopGeocoding()
-                self.showAlert(self.findButton, message: UdacityClient.ErrorMessages.geoError)
+                self.showAlert(self.findButton, message: UdactiyClient.ErrorMessages.geoError)
                 self.locationInput.text = ""
                 
             } else {
@@ -87,7 +87,7 @@ class InformationPostingViewController: UIViewController, UITextFieldDelegate {
                     self.coordinates = location.coordinate
                 } else {
                     self.stopGeocoding()
-                    self.showAlert(self.findButton, message: UdacityClient.ErrorMessages.locError)
+                    self.showAlert(self.findButton, message: UdactiyClient.ErrorMessages.locError)
                 }
                 
                 performUIUpdatesOnMain {

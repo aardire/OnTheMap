@@ -28,18 +28,15 @@ class UdactiyClient : NSObject {
     
     // MARK: networking functions
     
-    func taskForUdacityPOST(_ parameters: [String:String]?, completionHandlerForPOST: @escaping (_ result: AnyObject?, _ error: NSError?) -> Void) -> URLSessionDataTask  {
+    func taskForUdacityPOST(_ userName: String,_ userPassword: String, completionHandlerForPOST: @escaping (_ result: AnyObject?, _ error: NSError?) -> Void) -> URLSessionDataTask  {
         
-       /* 1. Set the parameters */
-        let userName = parameters?["username"]
-        let userPassword = parameters?["password"]
-        
+      
         /* 2/3. Build the URL, Configure the request */
         let request = NSMutableURLRequest(url: URL(string: "https://www.udacity.com/api/session")!)
         request.httpMethod = "POST"
         request.addValue("application/json", forHTTPHeaderField: "Accept")
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.httpBody = "{\"udacity\": {\"username\": \"\(userName!)\", \"password\": \"\(userPassword!)\"}}".data(using: String.Encoding.utf8)
+        request.httpBody = "{\"udacity\": {\"username\": \"\(userName)\", \"password\": \"\(userPassword)\"}}".data(using: String.Encoding.utf8)
         
         /* 4. Make the request */
         let task = session.dataTask(with: request as URLRequest) { data, response, error in
@@ -47,7 +44,7 @@ class UdactiyClient : NSObject {
             func sendError(_ error: String) {
                 print(error)
                 let userInfo = [NSLocalizedDescriptionKey : error]
-                completionHandlerForPOST(nil, NSError(domain: "taskForGETMethod", code: 1, userInfo: userInfo))
+                completionHandlerForPOST(nil, NSError(domain: "taskForPOSTMethod", code: 1, userInfo: userInfo))
             }
             
             /* GUARD: Was there an error? */
