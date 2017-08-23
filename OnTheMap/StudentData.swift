@@ -13,6 +13,4 @@ class StudentData: NSObject {
     
     static var locationArray: [StudentLocation] = [StudentLocation]()
     
-  
-
 }
