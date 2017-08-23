@@ -15,7 +15,6 @@ class InformationPostingViewController: UIViewController, MKMapViewDelegate  {
     // MARK: Properties
     lazy var geocoder = CLGeocoder()
     let activity = UIActivityIndicatorView()
-    let user = UdactiyClient.sharedInstance()
     
     // MARK: Outlets
     @IBOutlet weak var textView: UITextField!
@@ -29,11 +28,11 @@ class InformationPostingViewController: UIViewController, MKMapViewDelegate  {
         self.mapView.isHidden = true
     }
 
-    
+     /*
     @IBAction func geocode(_ sender: Any) {
         
         if let locationString = textView.text {
-            user.mapString = locationString
+            User.Information.mapString = locationString
             geocoder.geocodeAddressString(locationString) { (placemarks, error) in
                 self.processResponse(withPlacemarks: placemarks, error: error) {
                     
@@ -57,7 +56,7 @@ class InformationPostingViewController: UIViewController, MKMapViewDelegate  {
         geocodeButton.isHidden = true
         activity.startAnimating()
     }
-    
+   
     private func processResponse(withPlacemarks placemarks: [CLPlacemark]?, error: Error?,_ updates: completionHandlerForLocation: @escaping
         () -> Void) {
         // Update View
@@ -86,9 +85,9 @@ class InformationPostingViewController: UIViewController, MKMapViewDelegate  {
                 
             }
         }
-        
-        
+ 
     }
+ */
 }
 
 extension InformationPostingViewController: UITextFieldDelegate {

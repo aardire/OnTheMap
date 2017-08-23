@@ -89,6 +89,7 @@ struct StudentLocation {
         
     }
     
+    
     static func studentsFromResults(_ results:[[String:Any]]) -> [StudentLocation] {
         
         var studentLocation = [StudentLocation]()
@@ -99,4 +100,5 @@ struct StudentLocation {
         
         return studentLocation
     }
+   
 }

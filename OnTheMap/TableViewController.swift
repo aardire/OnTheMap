@@ -30,7 +30,7 @@ class TableViewController: UITableViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        ParseClient.sharedInstance().getStudentLocation(100) { (success, error) in
+        ParseClient.sharedInstance().returnStudents { (success, error) in
             
             if success! {
                 performUIUpdatesOnMain {

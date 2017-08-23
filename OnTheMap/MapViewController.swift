@@ -24,7 +24,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         
         var annotations = [MKPointAnnotation]()
         
-        ParseClient.sharedInstance().getStudentLocation(100) { (success,error) in
+        ParseClient.sharedInstance().returnStudents { (success,error) in
             
             performUIUpdatesOnMain {
                 if success! {
