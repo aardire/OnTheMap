@@ -13,7 +13,7 @@ import UIKit
 extension ParseClient {
     
     
-    private func getStudentLocation(_ numOfStudents: Int, completionHandlerForStudentLocations: @escaping (_ students: [StudentLocation]?, _ error: NSError?) -> Void ) {
+    func getStudentLocation(_ numOfStudents: Int, completionHandlerForStudentLocations: @escaping (_ success: Bool?,_ error: NSError?) -> Void ) {
         
         /* Specify Parameters for taskforGet */
         var parameters = [String: Any]()
@@ -27,33 +27,13 @@ extension ParseClient {
             } else {
                 if let results = studentLocations?[ParseClient.ResponseKeys.Results] as? [[String:AnyObject]] {
                     
-                    let students = StudentLocation.studentsFromResults(results)
-                    completionHandlerForStudentLocations(students,nil)
+                    StudentData.locationArray = StudentLocation.studentsFromResults(results)
+                    completionHandlerForStudentLocations(true,nil)
                 } else {
                     completionHandlerForStudentLocations(nil,NSError(domain: "getStudentLocation parsing", code: 0, userInfo: [NSLocalizedDescriptionKey: "Could not parse getStudentLocation"]))
                 }
             }
         }
     }
-    
-    func createStudentsDictionary(_ completionHandlerForAnnotations: @escaping (_ students: [StudentLocation]?,_ error: NSError?) -> Void) {
-        
-        getStudentLocation(100) { (studentsDict, error) in
-            
-            if let error = error {
-                print(error)
-                completionHandlerForAnnotations(nil, error)
-            } else {
-                completionHandlerForAnnotations(studentsDict,nil)
-            }
-        }
-    }
-    
-   
-    
-    
-    
-    
-    
     
 }

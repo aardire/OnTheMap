@@ -10,7 +10,9 @@ import UIKit
 
 extension UdactiyClient {
     
-    // MARK: authenticate Udacity User
+    // MARK: CurrentUser
+    
+    
     
     
     // MARK: get registration and unique ID 
@@ -63,14 +65,14 @@ extension UdactiyClient {
             
             if registered {
                 
-                self.uniqueKey = uniqueID!
+                User.Information.uniqueKey = uniqueID!
                 
                 self.getUserData(uniqueID!) { (sucess, userInfo, errorString) in
                     
                     if sucess {
                         
-                        self.firstName = userInfo?["first_name"] as! String
-                        self.lastName = userInfo?["last_name"] as! String
+                        User.Information.firstName = userInfo?["first_name"] as! String
+                        User.Information.lastName = userInfo?["last_name"] as! String
                         
                         completionHandlerForUserInfo(sucess, nil)
                         

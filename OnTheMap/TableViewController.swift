@@ -14,7 +14,7 @@ class TableViewController: UITableViewController {
     
     // MARK: Properties 
     
-    var students:[StudentLocation] = [StudentLocation]()
+    var studentsDict = StudentData.locationArray
     
     // MARK: Outlets
     
@@ -30,10 +30,9 @@ class TableViewController: UITableViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        ParseClient.sharedInstance().createStudentsDictionary { (studentsDict,error) in
+        ParseClient.sharedInstance().getStudentLocation(100) { (success, error) in
             
-            if let studentsDict = studentsDict {
-                self.students = studentsDict
+            if success! {
                 performUIUpdatesOnMain {
                     self.studentsTableView.reloadData()
                 }
@@ -52,7 +51,7 @@ class TableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cellReuseIdentifier = "StudentsTableViewCell"
-        let student = students[(indexPath as NSIndexPath).row]
+        let student = studentsDict[(indexPath as NSIndexPath).row]
         let cell = tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier) as UITableViewCell!
         
         cell?.textLabel!.text = "\(student.firstName) \(student.lastName)"
@@ -64,13 +63,13 @@ class TableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return students.count
+        return studentsDict.count
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         let app = UIApplication.shared
-        let student = students[(indexPath as NSIndexPath).row]
+        let student = studentsDict[(indexPath as NSIndexPath).row]
         let toOpen = student.mediaURL
         app.open(URL(string: toOpen)!, options: [:], completionHandler: nil)
     }

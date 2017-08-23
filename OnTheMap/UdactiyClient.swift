@@ -16,17 +16,6 @@ class UdactiyClient : NSObject {
     
     // shared session
     var session = URLSession.shared
-
-    var createdAt = ""
-    var firstName = ""
-    var lastName = ""
-    var latitude = 0.0
-    var longitude = 0.0
-    var mapString = ""
-    var mediaURL =  ""
-    var objectID = ""
-    var uniqueKey =  ""
-    var updatedAt = ""
     
     // MARK: Initializers
     
