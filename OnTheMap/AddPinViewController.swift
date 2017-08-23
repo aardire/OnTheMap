@@ -15,7 +15,7 @@ class AddPinViewController: UIViewController, UITextFieldDelegate {
     
     @IBOutlet weak var newPinMap: MKMapView!
     @IBOutlet weak var addUrlText: UITextField!
-    @IBOutlet weak var submitButton: CustomButton!
+    @IBOutlet weak var submitButton: UIButton!
     
     var inputCoordinates: CLLocationCoordinate2D?
     var lat: CLLocationDegrees?
@@ -94,8 +94,8 @@ class AddPinViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        self.view.endEditing(true)
+    @IBAction func userDidTapView(_ sender: AnyObject) {
+        resignIfFirstResponder(addUrlText)
     }
     
     func configUI(_ input: Bool) {

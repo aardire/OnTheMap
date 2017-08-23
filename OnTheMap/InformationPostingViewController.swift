@@ -13,7 +13,7 @@ import MapKit
 class InformationPostingViewController: UIViewController, UITextFieldDelegate {
     
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
-    @IBOutlet weak var findButton: CustomButton!
+    @IBOutlet weak var findButton: UIButton!
     @IBOutlet weak var locationInput: UITextField!
     
     
@@ -53,6 +53,7 @@ class InformationPostingViewController: UIViewController, UITextFieldDelegate {
         
         startGeocoding()
         guard locationInput.text!.isEmpty == false else {
+            self.stopGeocoding()
             self.showAlert(findButton!, message: UdactiyClient.ErrorMessages.inputError)
             return
         }
@@ -109,6 +110,10 @@ class InformationPostingViewController: UIViewController, UITextFieldDelegate {
         if textField.isFirstResponder {
             textField.resignFirstResponder()
         }
+    }
+    
+    @IBAction func userDidTapView(_ sender: AnyObject) {
+        resignIfFirstResponder(locationInput)
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
