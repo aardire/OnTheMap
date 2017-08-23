@@ -20,7 +20,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     
     @IBOutlet weak var usernameTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
-    @IBOutlet weak var loginButton: UIButton!
+    @IBOutlet weak var loginButton: CustomButton!
     @IBOutlet weak var signUpButton: UIButton!
     @IBOutlet weak var udacityLogoImageView: UIImageView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!

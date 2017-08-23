@@ -98,16 +98,5 @@ extension UdactiyClient {
         static let urlInputError = "Please insert a valid URL."
         static let geoError = "Unable to process location. Please enter a valid location."
     }
-    /*
-    let dictionary: [String:AnyObject] = [
-        "uniqueKey": Uaccount,
-        "firstName": firstName,
-        "lastName": lastName,
-        "mapString": mapString,
-        "mediaURL": mediaURL,
-        "latitude": latitude,
-        "longitude": longitude
-    ]
- */
     
 }

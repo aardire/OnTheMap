@@ -35,27 +35,35 @@ class AddPinViewController: UIViewController, UITextFieldDelegate {
     }
     
     //MARK: Submit information to Parse and return to sending VC (map or tableview)
+
     @IBAction func submitButton(_ sender: Any) {
+        configUI(false)
         
         guard addUrlText?.text!.isEmpty == false else {
             showAlert(submitButton!, message: UdactiyClient.ErrorMessages.urlInputError)
             return
         }
         
-        ParseClient.sharedInstance().addNewStudent(mapString: geocodedLocation!, mediaURL: addUrlText.text!, latitude: lat!, longitude: long!,  completionHandler: {(success, ErrorMessage) -> Void in
-            if success {
-                performUIUpdatesOnMain {
-                    self.presentingViewController?.presentingViewController?.dismiss(animated: true, completion: nil)
-                }
-                
-            } else {
+        ParseClient.sharedInstance().addNewStudent(mapString: geocodedLocation!, mediaURL: addUrlText.text!, latitude: lat!, longitude: long!) {(success, ErrorMessage) in
+            
+            guard success else {
                 performUIUpdatesOnMain {
                     self.showAlert(self.submitButton, message: UdactiyClient.ErrorMessages.newPinError)
+                    self.addUrlText.text = ""
                 }
+                return
             }
-        })
-        
+            
+            performUIUpdatesOnMain {
+                self.configUI(true)
+                self.addUrlText.text = ""
+                self.presentingViewController?.presentingViewController?.dismiss(animated: true, completion: nil)
+            }
+        }
     }
+    
+        
+    
     
   
     
@@ -84,6 +92,15 @@ class AddPinViewController: UIViewController, UITextFieldDelegate {
         if textField.isFirstResponder {
             textField.resignFirstResponder()
         }
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+    }
+    
+    func configUI(_ input: Bool) {
+        addUrlText.isEnabled = input
+        submitButton.isEnabled = input
     }
     
     

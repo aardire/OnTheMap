@@ -41,7 +41,7 @@ class InformationPostingViewController: UIViewController, UITextFieldDelegate {
         if segue.identifier == "AddPin" {
             if let addPinController = segue.destination as? AddPinViewController {
                 addPinController.inputCoordinates = coordinates
-                addPinController.geocodedLocation = User.Information.MapString
+                addPinController.geocodedLocation = locationInput.text!
             }
         } else {
             return
@@ -53,12 +53,12 @@ class InformationPostingViewController: UIViewController, UITextFieldDelegate {
         
         startGeocoding()
         guard locationInput.text!.isEmpty == false else {
-            self.showAlert(findButton!, message: UdactiyClient.ErrorMessages.urlInputError)
+            self.showAlert(findButton!, message: UdactiyClient.ErrorMessages.inputError)
             return
         }
-        User.Information.MapString = locationInput.text!
+        
         performUIUpdatesOnMain {
-            self.geocodeAddress(User.Information.MapString)
+            self.geocodeAddress(self.locationInput.text!)
         }
     }
     
@@ -70,7 +70,7 @@ class InformationPostingViewController: UIViewController, UITextFieldDelegate {
     
     //MARK: Function to geocode address String
     private func geocodeAddress(_ inputLocation: String) {
-        self.geocoder.geocodeAddressString(inputLocation) { (placemarks, error) -> Void in
+        self.geocoder.geocodeAddressString(inputLocation) { (placemarks, error) in
             
             if error != nil {
                 self.stopGeocoding()

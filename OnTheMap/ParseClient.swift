@@ -32,7 +32,7 @@ class ParseClient : NSObject {
         /* 1. Set the parameters */
         
         /* 2/3. Build the URL, Configure the request */
-        let request = NSMutableURLRequest(url: parseURLFromParameters(parameters, withPathExtension: nil))
+        let request = NSMutableURLRequest(url: parseURLFromParameters(parameters, nil))
         request.addValue(ParseClient.Constants.ParseApplicationID, forHTTPHeaderField: "X-Parse-Application-Id")
         request.addValue(ParseClient.Constants.RESTApiKey, forHTTPHeaderField: "X-Parse-REST-API-Key")
         
@@ -75,10 +75,10 @@ class ParseClient : NSObject {
     //MARK: Function to add new student location.
     func addNewStudent(mapString: String, mediaURL: String, latitude: CLLocationDegrees, longitude: CLLocationDegrees, completionHandler:  @escaping (_ success: Bool, _ errorMessage: String?) -> Void) {
         
-        let key = User.Information.UniqueKey
         let first = User.Information.FirstName
         let last = User.Information.LastName
-        
+        let key = User.Information.UniqueKey
+      
         let request = NSMutableURLRequest(url: URL(string: "https://parse.udacity.com/parse/classes/StudentLocation")!)
         request.httpMethod = "POST"
         request.addValue(ParseClient.Constants.ParseApplicationID, forHTTPHeaderField: "X-Parse-Application-Id")
@@ -136,7 +136,7 @@ class ParseClient : NSObject {
     }
     
     // create a URL from parameters
-    func parseURLFromParameters(_ parameters: [String:Any], withPathExtension: String?) -> URL {
+    func parseURLFromParameters(_ parameters: [String:Any]?,_ withPathExtension: String?) -> URL {
         
         var components = URLComponents()
         components.scheme = ParseClient.Constants.ApiScheme
@@ -144,7 +144,7 @@ class ParseClient : NSObject {
         components.path = ParseClient.Constants.ApiPath + (withPathExtension ?? "")
         components.queryItems = [URLQueryItem]()
         
-        for (key, value) in parameters {
+        for (key, value) in parameters! {
             let queryItem = URLQueryItem(name: key, value: "\(value)")
             components.queryItems!.append(queryItem)
         }

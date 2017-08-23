@@ -71,7 +71,7 @@
                                     <outlet property="delegate" destination="KTj-22-HaE" id="ZSG-Wi-IPQ"/>
                                 </connections>
                             </textField>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="B9K-MW-tFw">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="B9K-MW-tFw" customClass="CustomButton" customModule="OnTheMap" customModuleProvider="target">
                                 <rect key="frame" x="16" y="349" width="343" height="66"/>
                                 <color key="backgroundColor" red="0.68813399869109948" green="0.33939108707028454" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
@@ -102,6 +102,9 @@
                                         </fragment>
                                     </attributedString>
                                 </state>
+                                <connections>
+                                    <action selector="newUser:" destination="KTj-22-HaE" eventType="touchUpInside" id="tX7-Wk-Ycw"/>
+                                </connections>
                             </button>
                             <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="TN6-nU-R22">
                                 <rect key="frame" x="178" y="491" width="37" height="37"/>
@@ -365,6 +368,26 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <view contentMode="center" translatesAutoresizingMaskIntoConstraints="NO" id="jeU-tq-e1P">
+                                <rect key="frame" x="0.0" y="64" width="375" height="174"/>
+                                <subviews>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter URL " textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Yvo-Zq-Cn1">
+                                        <rect key="frame" x="37" y="50" width="300" height="75"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="75" id="Fk9-aQ-rPy"/>
+                                        </constraints>
+                                        <nil key="textColor"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="21"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                </subviews>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="Yvo-Zq-Cn1" secondAttribute="trailing" constant="38" id="3OO-3x-F97"/>
+                                    <constraint firstItem="Yvo-Zq-Cn1" firstAttribute="leading" secondItem="jeU-tq-e1P" secondAttribute="leading" constant="37" id="7b4-D9-rTZ"/>
+                                    <constraint firstItem="Yvo-Zq-Cn1" firstAttribute="top" secondItem="jeU-tq-e1P" secondAttribute="top" constant="50" id="fz8-vq-vfo"/>
+                                </constraints>
+                            </view>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="Ggc-In-hA7">
                                 <rect key="frame" x="0.0" y="231" width="375" height="436"/>
                             </mapView>
@@ -373,7 +396,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="21"/>
                                 <state key="normal" title="Submit"/>
                                 <connections>
-                                    <action selector="submitButton:" destination="DQz-bN-lYu" eventType="touchDragInside" id="SaP-vn-BYX"/>
+                                    <action selector="submitButton:" destination="DQz-bN-lYu" eventType="touchUpInside" id="aYI-Qp-EvR"/>
                                 </connections>
                             </button>
                             <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cP7-qT-lRn">
@@ -388,26 +411,6 @@
                                     </navigationItem>
                                 </items>
                             </navigationBar>
-                            <view contentMode="center" translatesAutoresizingMaskIntoConstraints="NO" id="jeU-tq-e1P">
-                                <rect key="frame" x="0.0" y="64" width="375" height="174"/>
-                                <subviews>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter URL " textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Yvo-Zq-Cn1">
-                                        <rect key="frame" x="38" y="72" width="300" height="75"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="75" id="Fk9-aQ-rPy"/>
-                                        </constraints>
-                                        <nil key="textColor"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="21"/>
-                                        <textInputTraits key="textInputTraits"/>
-                                    </textField>
-                                </subviews>
-                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="Yvo-Zq-Cn1" secondAttribute="trailing" constant="37" id="3OO-3x-F97"/>
-                                    <constraint firstItem="Yvo-Zq-Cn1" firstAttribute="leading" secondItem="jeU-tq-e1P" secondAttribute="leading" constant="38" id="7b4-D9-rTZ"/>
-                                    <constraint firstItem="Yvo-Zq-Cn1" firstAttribute="top" secondItem="jeU-tq-e1P" secondAttribute="top" constant="72" id="fz8-vq-vfo"/>
-                                </constraints>
-                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -470,7 +473,7 @@
                                 <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="NIa-6Z-9P2" id="eGO-Qs-lxh">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
                             </tableViewCell>
