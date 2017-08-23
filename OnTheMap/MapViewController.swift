@@ -12,7 +12,7 @@ import MapKit
 class MapViewController: UIViewController, MKMapViewDelegate {
     
     // MARK: Properties
-    var studentsDict = StudentData.locationArray
+   
     
     // MARK: Outlets 
     @IBOutlet weak var mapView: MKMapView!
@@ -24,11 +24,12 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         
         var annotations = [MKPointAnnotation]()
         
-        ParseClient.sharedInstance().returnStudents { (success,error) in
+        ParseClient.sharedInstance().returnStudents(100) { (success,error) in
             
             performUIUpdatesOnMain {
                 if success! {
-                    for student in self.studentsDict {
+            
+                    for student in StudentData.locationArray {
                         
                         let coordinate = CLLocationCoordinate2D(latitude: CLLocationDegrees(student.latitude), longitude: CLLocationDegrees(student.longitude))
                         

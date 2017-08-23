@@ -13,7 +13,7 @@ import UIKit
 extension ParseClient {
     
     
-    private func getAllStudentLocations(_ numOfStudents: Int, completionHandlerForStudentLocations: @escaping (_ success: Bool?,_ error: NSError?) -> Void ) {
+    private func getAllStudentLocations(_ numOfStudents: Int, completionHandlerForStudentLocations: @escaping (_ success: Bool?,_ error: NSError?, _ results:[[String:AnyObject]]?) -> Void ) {
         
         /* Specify Parameters for taskforGet */
         var parameters = [String: Any]()
@@ -23,31 +23,29 @@ extension ParseClient {
             
             if let error = error {
                 print(error)
-                completionHandlerForStudentLocations(nil,error)
+                completionHandlerForStudentLocations(nil,error,nil)
             } else {
                 if let results = studentLocations?[ParseClient.ResponseKeys.Results] as? [[String:AnyObject]] {
-                    
-                    let students = StudentLocation.studentsFromResults(results)
-                    StudentData.locationArray = students
-                    print(students)
-                    completionHandlerForStudentLocations(true,nil)
+                   
+                    completionHandlerForStudentLocations(true,nil,results)
                 } else {
-                    completionHandlerForStudentLocations(nil,NSError(domain: "getStudentLocation parsing", code: 0, userInfo: [NSLocalizedDescriptionKey: "Could not parse getStudentLocation"]))
+                    completionHandlerForStudentLocations(nil,NSError(domain: "getStudentLocation parsing", code: 0, userInfo: [NSLocalizedDescriptionKey: "Could not parse getStudentLocation"]),nil)
                 }
             }
         }
     }
     
-    func returnStudents(_ completionHandlerForStudents: @escaping (_ success: Bool?, _ error: String?) -> Void) {
+    func returnStudents(_ number: Int, _ completionHandlerForStudents: @escaping (_ success: Bool?, _ error: NSError?) -> Void) {
         
-        getAllStudentLocations(100) { (success, error) in
-            if success! {
-                completionHandlerForStudents(true,nil)
+        getAllStudentLocations(number) { (success, error, results) in
+            if let error = error {
+            print(error)
+            completionHandlerForStudents(false,error)
             } else {
-                completionHandlerForStudents(false,"error at returnStudents")
+                StudentData.locationArray = StudentLocation.studentsFromResults(results!)
+                completionHandlerForStudents(true,nil)
             }
         }
-    
 
     }
     

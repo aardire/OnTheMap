@@ -14,7 +14,6 @@ class TableViewController: UITableViewController {
     
     // MARK: Properties 
     
-    var studentsDict = StudentData.locationArray
     
     // MARK: Outlets
     
@@ -30,7 +29,7 @@ class TableViewController: UITableViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        ParseClient.sharedInstance().returnStudents { (success, error) in
+        ParseClient.sharedInstance().returnStudents(100) { (success, error) in
             
             if success! {
                 performUIUpdatesOnMain {
@@ -51,7 +50,7 @@ class TableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cellReuseIdentifier = "StudentsTableViewCell"
-        let student = studentsDict[(indexPath as NSIndexPath).row]
+        let student = StudentData.locationArray[(indexPath as NSIndexPath).row]
         let cell = tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier) as UITableViewCell!
         
         cell?.textLabel!.text = "\(student.firstName) \(student.lastName)"
@@ -63,13 +62,13 @@ class TableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return studentsDict.count
+        return StudentData.locationArray.count
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         let app = UIApplication.shared
-        let student = studentsDict[(indexPath as NSIndexPath).row]
+        let student = StudentData.locationArray[(indexPath as NSIndexPath).row]
         let toOpen = student.mediaURL
         app.open(URL(string: toOpen)!, options: [:], completionHandler: nil)
     }

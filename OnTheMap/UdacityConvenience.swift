@@ -86,4 +86,16 @@ extension UdactiyClient {
         }
     }
     
+    /*
+    let dictionary: [String:AnyObject] = [
+        "uniqueKey": Uaccount,
+        "firstName": firstName,
+        "lastName": lastName,
+        "mapString": mapString,
+        "mediaURL": mediaURL,
+        "latitude": latitude,
+        "longitude": longitude
+    ]
+ */
+    
 }
