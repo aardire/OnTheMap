@@ -10,166 +10,116 @@ import UIKit
 import CoreLocation
 import MapKit
 
-class InformationPostingViewController: UIViewController, MKMapViewDelegate  {
+class InformationPostingViewController: UIViewController, UITextFieldDelegate {
     
-    // MARK: Properties
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    @IBOutlet weak var findButton: RoundedButton!
+    @IBOutlet weak var locationInput: UITextField!
+    
+    
+    var userLocation: String?
+    var coordinates: CLLocationCoordinate2D?
     lazy var geocoder = CLGeocoder()
-    let activity = UIActivityIndicatorView()
-    
-    // MARK: Outlets
-    @IBOutlet weak var textView: UITextField!
-    @IBOutlet weak var geocodeButton: UIButton!
-    @IBOutlet weak var mapView: MKMapView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
-        
-        self.mapView.isHidden = true
+        locationInput.delegate = self
     }
-
-     /*
-    @IBAction func geocode(_ sender: Any) {
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        setupViewResizerOnKeyboardShown()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        unsubscribeFromKeyboardNotifications()
+    }
+    
+    //MARK: After user input of location, new VC will load to ask for URL detail.
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
-        if let locationString = textView.text {
-            User.Information.mapString = locationString
-            geocoder.geocodeAddressString(locationString) { (placemarks, error) in
-                self.processResponse(withPlacemarks: placemarks, error: error) {
-                    
-                    performUIUpdatesOnMain {
-                        let coordinate = CLLocationCoordinate2D(latitude: CLLocationDegrees(self.user.latitude), longitude: CLLocationDegrees(self.user.longitude))
-                        
-                        let annotation = MKPointAnnotation()
-                        annotation.coordinate = coordinate
-                        annotation.title = "\(self.user.firstName) \(self.user.lastName)"
-                        
-                    }
+        if segue.identifier == "AddPin" {
+            if let addPinController = segue.destination as? AddPinViewController {
+                addPinController.inputCoordinates = coordinates
+                addPinController.geocodedLocation = userLocation
             }
-        }
-            // alert
+        } else {
             return
-        } else {
+        }
+    }
+    
+    //MARK: Find button tapped
+    @IBAction func findButtonPressed(_ sender: Any) {
+        startGeocoding()
+        guard locationInput.text!.isEmpty == false else {
+            self.showAlert(findButton!, message: UdacityClient.ErrorMessages.urlInputError)
+            return
+        }
+        userLocation = locationInput.text!
+        performUIUpdatesOnMain {
+            self.geocodeAddress(self.userLocation!)
             
         }
-        
-        
-        geocodeButton.isHidden = true
-        activity.startAnimating()
     }
-   
-    private func processResponse(withPlacemarks placemarks: [CLPlacemark]?, error: Error?,_ updates: completionHandlerForLocation: @escaping
-        () -> Void) {
-        // Update View
-        geocodeButton.isHidden = false
-        activity.stopAnimating()
-        
-        if let error = error {
-            print("Unable to Forward Geocode Address (\(error))")
+    
+    //MARK: Cancel button tapped
+    @IBAction func cancelButtonPressed(_ sender: Any) {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
+    //MARK: Function to geocode address String
+    private func geocodeAddress(_ inputLocation: String) {
+        self.geocoder.geocodeAddressString(inputLocation) { (placemarks, error) -> Void in
             
-            
-        } else {
-            var location: CLLocation?
-            
-            if let placemarks = placemarks, placemarks.count > 0 {
-                location = placemarks.first?.location
-            }
-            
-            if let location = location {
-                user.latitude = location.coordinate.latitude
-                user.longitude = location.coordinate.longitude
-                completionHandlerForLocation {
-                    self.mapView.isHidden = false
-                }
+            if error != nil {
+                self.stopGeocoding()
+                self.showAlert(self.findButton, message: UdacityClient.ErrorMessages.geoError)
+                self.locationInput.text = ""
                 
             } else {
+                var location: CLLocation?
                 
+                if let placemarks = placemarks, placemarks.count > 0 {
+                    location = placemarks.first?.location
+                }
+                
+                if let location = location {
+                    self.coordinates = location.coordinate
+                } else {
+                    self.stopGeocoding()
+                    self.showAlert(self.findButton, message: UdacityClient.ErrorMessages.locError)
+                }
+                
+                performUIUpdatesOnMain {
+                    self.stopGeocoding()
+                    self.performSegue(withIdentifier: "AddPin", sender: self)
+                }
             }
         }
- 
     }
- */
-}
-
-extension InformationPostingViewController: UITextFieldDelegate {
     
-    func setUIEnabled(_ enabled: Bool) {
-        
-        textView.isEnabled = enabled
-        geocodeButton.isEnabled = enabled
-        
-        // adjust login button alpha
-        if enabled {
-            geocodeButton.alpha = 1.0
-        } else {
-            geocodeButton.alpha = 0.5
+    // MARK: UITextFieldDelegate functions
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    
+    private func resignIfFirstResponder(_ textField: UITextField) {
+        if textField.isFirstResponder {
+            textField.resignFirstResponder()
         }
     }
     
-    func displayError(_ errorString: String?) {
-        if let errorString = errorString {
-            // debugTextLabel.text = errorString
-        }
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
     }
     
-    func configureUI() {
-        
-        /*
-         // configure background gradient
-         let backgroundGradient = CAGradientLayer()
-         backgroundGradient.colors = [Constants.UI.LoginColorTop, Constants.UI.LoginColorBottom]
-         backgroundGradient.locations = [0.0, 1.0]
-         backgroundGradient.frame = view.frame
-         view.layer.insertSublayer(backgroundGradient, at: 0)
-         */
-        
-        configureTextField(textView)
-       
+    //MARK: Activity indicator control functions.
+    func startGeocoding() {
+        activityIndicator.startAnimating()
     }
     
-    func configureTextField(_ textField: UITextField) {
-        let textFieldPaddingViewFrame = CGRect(x: 0.0, y: 0.0, width: 13.0, height: 0.0)
-        let textFieldPaddingView = UIView(frame: textFieldPaddingViewFrame)
-        textField.leftView = textFieldPaddingView
-        textField.leftViewMode = .always
-        //textField.backgroundColor = Constants.UI.GreyColor
-        //textField.textColor = Constants.UI.BlueColor
-        textField.attributedPlaceholder = NSAttributedString(string: textField.placeholder!, attributes: [NSForegroundColorAttributeName: UIColor.white])
-        //textField.tintColor = Constants.UI.BlueColor
-        textField.delegate = self
+    func stopGeocoding() {
+        activityIndicator.stopAnimating()
     }
-}
-
-// MARK: - LoginViewController (Notifications)
-
-private extension LoginViewController {
-    
-    func subscribeToNotification(_ notification: NSNotification.Name, selector: Selector) {
-        NotificationCenter.default.addObserver(self, selector: selector, name: notification, object: nil)
-    }
-    
-    func unsubscribeFromAllNotifications() {
-        NotificationCenter.default.removeObserver(self)
-}
-
-    // MARK: MKMapViewDelegate
-    
-    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-        
-        let reuseId = "pin"
-        
-        var pinView = mapView.dequeueReusableAnnotationView(withIdentifier: reuseId) as? MKPinAnnotationView
-        
-        if pinView == nil {
-            pinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: reuseId)
-            pinView!.canShowCallout = true
-            pinView!.pinTintColor = .red
-            pinView!.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
-        }
-        else {
-            pinView!.annotation = annotation
-        }
-        
-        return pinView
-    }
-
 }

@@ -12,16 +12,17 @@ class User: NSObject {
     
     struct Information {
         
-        static var createdAt = ""
-        static var firstName = ""
-        static var lastName = ""
-        static var latitude = 0.0
-        static var longitude = 0.0
-        static var mapString = ""
-        static var mediaURL =  ""
-        static var objectID = ""
-        static var uniqueKey =  ""
-        static var updatedAt = ""
+        static var CreatedAt = "createdAt"
+        static var FirstName = "firstName"
+        static var LastName = "lastName"
+        static var Latitude = "latitude"
+        static var Longitude = "longitude"
+        static var MapString = "mapString"
+        static var MediaURL = "mediaURL"
+        static var ObjectID = "objectId"
+        static var UniqueKey = "uniqueKey"
+        static var UpdatedAt = "updatedAt"
+        static var Results = "results"
     }
     
 }

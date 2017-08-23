@@ -9,7 +9,7 @@
 
 import UIKit
 
-class LoginViewController: UIViewController {
+class LoginViewController: UIViewController, UITextFieldDelegate {
     
     // MARK: Properties
     var keyboardOnScreen = false
@@ -22,63 +22,75 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var signUpButton: UIButton!
     @IBOutlet weak var udacityLogoImageView: UIImageView!
     @IBOutlet weak var debugTextLabel: UILabel!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         configureUI()
-        
-        subscribeToNotification(.UIKeyboardWillShow, selector: #selector(keyboardWillShow))
-        subscribeToNotification(.UIKeyboardWillHide, selector: #selector(keyboardWillHide))
-        subscribeToNotification(.UIKeyboardDidShow, selector: #selector(keyboardDidShow))
-        subscribeToNotification(.UIKeyboardDidHide, selector: #selector(keyboardDidHide))
+        setupViewResizerOnKeyboardShown()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        unsubscribeFromAllNotifications()
+        unsubscribeFromKeyboardNotifications()
     }
     
     @IBAction func loginPressed(_ sender: AnyObject) {
         
-        userDidTapView(self)
+        startNetworkActivity()
         
         var parameters = [String:String]()
         parameters["username"] = usernameTextField.text!
         parameters["password"] = passwordTextField.text!
         
-        if usernameTextField.text!.isEmpty || passwordTextField.text!.isEmpty {
-            debugTextLabel.text = "Username or Password Empty."
-        } else {
-            setUIEnabled(false)
+        guard usernameTextField.text!.isEmpty == false && passwordTextField.text!.isEmpty == false else {
+            showAlert(sender, message: UdactiyClient.ErrorMessages.noInputError)
+            return
+        }
+        
+        Connectivity.isInternetAvailable(webSiteToPing: nil) { (success) in
+            guard success else {
+                self.stopNetworkActivity()
+                self.passwordTextField.text = ""
+                self.showAlert(sender, message: UdactiyClient.ErrorMessages.networkError)
+                return
+            }
+        }
             
-            UdactiyClient.sharedInstance().getUdacityUserInfo(parameters) { (sucess, error) in
-                
+        UdactiyClient.sharedInstance().getUdacityUserInfo(parameters) { (sucess, error) in
+            
+            guard sucess else {
                 performUIUpdatesOnMain {
-                    if sucess {
-                        self.completeLogin()
-                    } else {
-                        self.displayError(error!)
-                    }
+                    self.showAlert(sender, message: UdactiyClient.ErrorMessages.loginError)
+                    self.usernameTextField.text = ""
+                    self.passwordTextField.text = ""
                 }
-                
+                return
             }
             
+            performUIUpdatesOnMain {
+                self.stopNetworkActivity()
+                let controller = self.storyboard!.instantiateViewController(withIdentifier: "TabBarController") as! UITabBarController
+                self.present(controller, animated: true, completion: nil)
+                self.usernameTextField.text = ""
+                self.passwordTextField.text = ""
+            }
         }
+            
     }
     
-    private func completeLogin() {
-        
-            self.debugTextLabel.text = ""
-            self.setUIEnabled(true)
-            let controller = self.storyboard!.instantiateViewController(withIdentifier: "TabBarController") as! UITabBarController
-            present(controller, animated: true, completion: nil) 
+    //MARK: New user request button pressed
+    @IBAction func newUser(_ sender: AnyObject) {
+        let url = NSURL(string: "https://www.udacity.com/account/auth#!/signup")
+        UIApplication.shared.open(url! as URL)
     }
-}
+    
+
 
 // MARK: - LoginViewController: UITextFieldDelegate
 
-extension LoginViewController: UITextFieldDelegate {
+
     
     // MARK: UITextFieldDelegate
     
@@ -87,35 +99,6 @@ extension LoginViewController: UITextFieldDelegate {
         return true
     }
     
-    // MARK: Show/Hide Keyboard
-    
-    func keyboardWillShow(_ notification: Notification) {
-        if !keyboardOnScreen {
-            view.frame.origin.y = -keyboardHeight(notification)
-            udacityLogoImageView.isHidden = true
-        }
-    }
-    
-    func keyboardWillHide(_ notification: Notification) {
-        if keyboardOnScreen {
-            view.frame.origin.y += keyboardHeight(notification)
-            udacityLogoImageView.isHidden = false
-        }
-    }
-    
-    func keyboardDidShow(_ notification: Notification) {
-        keyboardOnScreen = true
-    }
-    
-    func keyboardDidHide(_ notification: Notification) {
-        keyboardOnScreen = false
-    }
-    
-    private func keyboardHeight(_ notification: Notification) -> CGFloat {
-        let userInfo = (notification as NSNotification).userInfo
-        let keyboardSize = userInfo![UIKeyboardFrameEndUserInfoKey] as! NSValue
-        return keyboardSize.cgRectValue.height
-    }
     
     private func resignIfFirstResponder(_ textField: UITextField) {
         if textField.isFirstResponder {
@@ -128,33 +111,10 @@ extension LoginViewController: UITextFieldDelegate {
         resignIfFirstResponder(passwordTextField)
     }
  
-}
+
 
 // MARK: - LoginViewController (Configure UI)
 
-private extension LoginViewController {
-    
-    func setUIEnabled(_ enabled: Bool) {
-        usernameTextField.isEnabled = enabled
-        passwordTextField.isEnabled = enabled
-        loginButton.isEnabled = enabled
-        debugTextLabel.text = ""
-        debugTextLabel.isEnabled = enabled
-        
-        // adjust login button alpha
-        if enabled {
-            loginButton.alpha = 1.0
-        } else {
-            loginButton.alpha = 0.5
-        }
-    }
-    
-    func displayError(_ errorString: String?) {
-        if let errorString = errorString {
-            debugTextLabel.text = errorString
-        }
-    }
-    
     func configureUI() {
         
         /*
@@ -181,17 +141,25 @@ private extension LoginViewController {
         //textField.tintColor = Constants.UI.BlueColor
         textField.delegate = self
     }
-}
-
-// MARK: - LoginViewController (Notifications)
-
-private extension LoginViewController {
     
-    func subscribeToNotification(_ notification: NSNotification.Name, selector: Selector) {
-        NotificationCenter.default.addObserver(self, selector: selector, name: notification, object: nil)
+    
+    //MARK: Disables input and displays "busy" indicator while performing login.
+    func startNetworkActivity() {
+        activityIndicator.startAnimating()
+        usernameTextField.isEnabled = false
+        passwordTextField.isEnabled = false
+        loginButton.isEnabled = false
     }
     
-    func unsubscribeFromAllNotifications() {
-        NotificationCenter.default.removeObserver(self)
+    //MARK: Re-enables input if necessary following login. Also hides "busy" indicator.
+    func stopNetworkActivity() {
+        activityIndicator.stopAnimating()
+        usernameTextField.isEnabled = true
+        passwordTextField.isEnabled = true
+        loginButton.isEnabled = true
     }
+    
+
 }
+
+
