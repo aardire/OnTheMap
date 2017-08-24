@@ -19,14 +19,9 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     
     // MARK: Life Cycle
     
-    override func viewWillAppear(_ animated:Bool) {
-        super.viewWillAppear(animated)
+    override func viewDidLoad() {
         
-        getCurrentStatus()
-    }
-    
-    // MARK: get current students - make network request and populate for current view. 
-    private func getCurrentStatus() {
+        super.viewDidLoad()
         
         var annotations = [MKPointAnnotation]()
         
@@ -59,7 +54,9 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     
     @IBAction func refreshButton(_ sender: Any) {
         
-        getCurrentStatus()
+        performUIUpdatesOnMain {
+            self.viewDidLoad()
+        }
     }
     
     @IBAction func logoutButton(_ sender: Any) {

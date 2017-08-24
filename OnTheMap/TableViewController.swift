@@ -20,16 +20,10 @@ class TableViewController: UITableViewController {
     @IBOutlet var studentsTableView: UITableView!
     
     // MARK: Life Cycle
-
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-      getCurrentStatus()
-        
-    }
     
-    // MARK: get current students - make network request and populate for current view. 
-    private func getCurrentStatus() {
+    override func viewDidLoad() {
+        
+        super.viewDidLoad()
         
         ParseClient.sharedInstance.returnStudents(100) { (success) in
             
@@ -41,13 +35,14 @@ class TableViewController: UITableViewController {
                 }
             }
         }
-        
     }
-    
+
 
     @IBAction func refreshButton(_ sender: Any) {
         
-      getCurrentStatus()
+        performUIUpdatesOnMain {
+            self.viewDidLoad()
+        }
     }
 
     @IBAction func logoutButton(_ sender: Any) {
