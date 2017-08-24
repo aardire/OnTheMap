@@ -11,7 +11,7 @@ import UIKit
 extension UIViewController {
     
     // MARK: -  Error alert setup
-    func showAlert(_ sender: Any, message: String) {
+    func showAlert(message: String) {
         let errMessage = message
         
         let alert = UIAlertController(title: nil, message: errMessage, preferredStyle: UIAlertControllerStyle.alert)
@@ -26,35 +26,34 @@ extension UIViewController {
     // MARK: Show/Hide Keyboard functions
     func setupViewResizerOnKeyboardShown() {
         NotificationCenter.default.addObserver(self,
-                                               selector: #selector(keyboardWillShowForResizing),
+                                               selector: #selector(keyboardWillShow),
                                                name: Notification.Name.UIKeyboardWillShow,
                                                object: nil)
         NotificationCenter.default.addObserver(self,
-                                               selector: #selector(keyboardWillHideForResizing),
+                                               selector: #selector(keyboardWillHide),
                                                name: Notification.Name.UIKeyboardWillHide,
                                                object: nil)
     }
     
-    func keyboardWillShowForResizing(notification: Notification) {
-        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue,
-            let window = self.view.window?.frame {
-            // We're not just minusing the kb height from the view height because
-            // the view could already have been resized for the keyboard before
-            self.view.frame = CGRect(x: self.view.frame.origin.x,
-                                     y: self.view.frame.origin.y,
-                                     width: self.view.frame.width,
-                                     height: window.origin.y + window.height - keyboardSize.height)
-        }
+    // MARK:keyboardWillShow
+    func keyboardWillShow(_ notification:Notification) {
+        
+        view.frame.origin.y = -getKeyboardHeight(notification)
     }
     
-    func keyboardWillHideForResizing(notification: Notification) {
-        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
-            let viewHeight = self.view.frame.height
-            self.view.frame = CGRect(x: self.view.frame.origin.x,
-                                     y: self.view.frame.origin.y,
-                                     width: self.view.frame.width,
-                                     height: viewHeight + keyboardSize.height)
-        }
+    // MARK:keyboardWillHide
+    
+    func keyboardWillHide(_ notification:Notification) {
+        
+        view.frame.origin.y = 0
+    }
+    
+    // MARK: getKeyboardHeight
+    func getKeyboardHeight(_ notification:Notification) -> CGFloat {
+        
+        let userInfo = notification.userInfo
+        let keyboardSize = userInfo![UIKeyboardFrameEndUserInfoKey] as! NSValue
+        return keyboardSize.cgRectValue.height
     }
     
     func unsubscribeFromKeyboardNotifications() {
@@ -62,6 +61,23 @@ extension UIViewController {
         NotificationCenter.default.removeObserver(self, name: .UIKeyboardWillHide, object: nil)
     }
     
+    struct ErrorMessages {
+        static let noInputError = "Please provide login details!"
+        static let loginError = "Udacity Login failed. Incorrect username or password."
+        static let dataError = "No data was returned."
+        static let networkError = "No connection to the Internet!"
+        static let userError = "Unable to get user data."
+        static let studentError = "Unable to get student data."
+        static let genError = "An error was returned."
+        static let inputError = "Please insert a location!"
+        static let locError = "No matching location found."
+        static let newPinError = "Could not add pin."
+        static let urlError = "URL cannot be accessed. Please try again or select another student."
+        static let refreshError = "Could not refresh locations."
+        static let logoutError = "Could not log user out!"
+        static let urlInputError = "Please insert a valid URL."
+        static let geoError = "Unable to process location. Please enter a valid location."
+    }
     
     
 }

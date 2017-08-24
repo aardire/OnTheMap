@@ -73,7 +73,7 @@ class ParseClient : NSObject {
     }
     
     //MARK: Function to add new student location.
-    func addNewStudent(mapString: String, mediaURL: String, latitude: CLLocationDegrees, longitude: CLLocationDegrees, completionHandler:  @escaping (_ success: Bool, _ errorMessage: String?) -> Void) {
+    func addNewStudent(mapString: String, mediaURL: String, latitude: CLLocationDegrees, longitude: CLLocationDegrees, completionHandler:  @escaping (_ success: Bool) -> Void) {
         
         let first = User.Information.FirstName
         let last = User.Information.LastName
@@ -90,35 +90,14 @@ class ParseClient : NSObject {
         let task = session.dataTask(with: request as URLRequest) { data, response, error in
             
             guard (error == nil) else {
-                completionHandler(false, UdactiyClient.ErrorMessages.genError)
+                completionHandler(false)
                 return
             }
-            completionHandler(true, nil)
+            completionHandler(true)
         }
         task.resume()
     }
 
-
-    
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     // MARK: Helpers
     
     // given raw JSON, return a usable Foundation object
@@ -151,16 +130,7 @@ class ParseClient : NSObject {
         
         return components.url!
     }
-    
-    // substitute the key for the value that is contained within the method name
-    func substituteKeyInMethod(_ method: String, key: String, value: String) -> String? {
-        if method.range(of: "{\(key)}") != nil {
-            return method.replacingOccurrences(of: "{\(key)}", with: value)
-        } else {
-            return nil
-        }
-    }
-    
+
     // MARK: Shared Instance
     
     class func sharedInstance() -> ParseClient {

@@ -46,7 +46,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         self.userPassword = passwordTextField.text!
         
         guard self.userName?.isEmpty == false && self.userPassword?.isEmpty == false else {
-            showAlert(sender, message: UdactiyClient.ErrorMessages.noInputError)
+            stopNetworkActivity()
+            self.showAlert(message: ErrorMessages.noInputError)
             return
         }
         
@@ -54,7 +55,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             guard success else {
                 self.stopNetworkActivity()
                 self.passwordTextField.text = ""
-                self.showAlert(sender, message: UdactiyClient.ErrorMessages.networkError)
+                self.showAlert(message: ErrorMessages.networkError)
                 return
             }
         }
@@ -63,7 +64,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             
             guard sucess else {
                 performUIUpdatesOnMain {
-                    self.showAlert(sender, message: UdactiyClient.ErrorMessages.loginError)
+                    self.showAlert(message: ErrorMessages.loginError)
                     self.usernameTextField.text = ""
                     self.passwordTextField.text = ""
                 }
@@ -117,16 +118,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
 // MARK: - LoginViewController (Configure UI)
 
     func configureUI() {
-        
-        /*
-        // configure background gradient
-        let backgroundGradient = CAGradientLayer()
-        backgroundGradient.colors = [Constants.UI.LoginColorTop, Constants.UI.LoginColorBottom]
-        backgroundGradient.locations = [0.0, 1.0]
-        backgroundGradient.frame = view.frame
-        view.layer.insertSublayer(backgroundGradient, at: 0)
-        */
-        
         configureTextField(usernameTextField)
         configureTextField(passwordTextField)
     }
@@ -136,10 +127,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         let textFieldPaddingView = UIView(frame: textFieldPaddingViewFrame)
         textField.leftView = textFieldPaddingView
         textField.leftViewMode = .always
-        //textField.backgroundColor = Constants.UI.GreyColor
-        //textField.textColor = Constants.UI.BlueColor
         textField.attributedPlaceholder = NSAttributedString(string: textField.placeholder!, attributes: [NSForegroundColorAttributeName: UIColor.white])
-        //textField.tintColor = Constants.UI.BlueColor
         textField.delegate = self
     }
     
@@ -158,11 +146,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         usernameTextField.isEnabled = true
         passwordTextField.isEnabled = true
         loginButton.isEnabled = true
-    }
-    
-    //MARK: Change status bar to light color.
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
     }
     
 

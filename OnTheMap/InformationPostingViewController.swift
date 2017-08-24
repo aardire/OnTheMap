@@ -54,7 +54,7 @@ class InformationPostingViewController: UIViewController, UITextFieldDelegate {
         startGeocoding()
         guard locationInput.text!.isEmpty == false else {
             self.stopGeocoding()
-            self.showAlert(findButton!, message: UdactiyClient.ErrorMessages.inputError)
+            self.showAlert(message: ErrorMessages.inputError)
             return
         }
         
@@ -75,7 +75,7 @@ class InformationPostingViewController: UIViewController, UITextFieldDelegate {
             
             if error != nil {
                 self.stopGeocoding()
-                self.showAlert(self.findButton, message: UdactiyClient.ErrorMessages.geoError)
+                self.showAlert(message: ErrorMessages.geoError)
                 self.locationInput.text = ""
                 
             } else {
@@ -89,7 +89,7 @@ class InformationPostingViewController: UIViewController, UITextFieldDelegate {
                     self.coordinates = location.coordinate
                 } else {
                     self.stopGeocoding()
-                    self.showAlert(self.findButton, message: UdactiyClient.ErrorMessages.locError)
+                    self.showAlert(message: ErrorMessages.locError)
                 }
                 
                 performUIUpdatesOnMain {

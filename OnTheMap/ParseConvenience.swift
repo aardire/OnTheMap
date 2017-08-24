@@ -22,11 +22,9 @@ extension ParseClient {
         let _ = taskForGetMethod(parameters) { (studentLocations, error) in
             
             if let error = error {
-                print(error)
                 completionHandlerForStudentLocations(nil,error,nil)
             } else {
                 if let results = studentLocations?[ParseClient.ResponseKeys.Results] as? [[String:AnyObject]] {
-                   
                     completionHandlerForStudentLocations(true,nil,results)
                 } else {
                     completionHandlerForStudentLocations(nil,NSError(domain: "getStudentLocation parsing", code: 0, userInfo: [NSLocalizedDescriptionKey: "Could not parse getStudentLocation"]),nil)
@@ -39,7 +37,6 @@ extension ParseClient {
         
         getAllStudentLocations(number) { (success, error, results) in
             if let error = error {
-            print(error)
             completionHandlerForStudents(false,error)
             } else {
                 StudentData.locationArray = StudentLocation.studentsFromResults(results!)

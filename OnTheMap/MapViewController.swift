@@ -41,7 +41,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
                         annotations.append(annotation)
                     }
                 } else {
-                    print(error ?? "empty error")
+                    self.showAlert(message: ErrorMessages.dataError)
                 }
                 self.mapView.addAnnotations(annotations)
             }

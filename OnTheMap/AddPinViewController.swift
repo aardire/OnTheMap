@@ -40,15 +40,16 @@ class AddPinViewController: UIViewController, UITextFieldDelegate {
         configUI(false)
         
         guard addUrlText?.text!.isEmpty == false else {
-            showAlert(submitButton!, message: UdactiyClient.ErrorMessages.urlInputError)
+            configUI(true)
+            showAlert(message: ErrorMessages.urlInputError)
             return
         }
         
-        ParseClient.sharedInstance().addNewStudent(mapString: geocodedLocation!, mediaURL: addUrlText.text!, latitude: lat!, longitude: long!) {(success, ErrorMessage) in
+        ParseClient.sharedInstance().addNewStudent(mapString: geocodedLocation!, mediaURL: addUrlText.text!, latitude: lat!, longitude: long!) {(success) in
             
             guard success else {
                 performUIUpdatesOnMain {
-                    self.showAlert(self.submitButton, message: UdactiyClient.ErrorMessages.newPinError)
+                    self.showAlert(message: ErrorMessages.newPinError)
                     self.addUrlText.text = ""
                 }
                 return
@@ -61,11 +62,6 @@ class AddPinViewController: UIViewController, UITextFieldDelegate {
             }
         }
     }
-    
-        
-    
-    
-  
     
     //MARK: Cancel button tapped
     @IBAction func cancelButton(_ sender: Any) {
