@@ -16,6 +16,10 @@ class ParseClient : NSObject {
     
     // MARK: Properties
     
+    // MARK: Shared Instance
+    
+    static var sharedInstance = ParseClient()
+    
     // shared session
     var session = URLSession.shared
 
@@ -125,15 +129,6 @@ class ParseClient : NSObject {
         }
         
         return components.url!
-    }
-
-    // MARK: Shared Instance
-    
-    class func sharedInstance() -> ParseClient {
-        struct Singleton {
-            static var sharedInstance = ParseClient()
-        }
-        return Singleton.sharedInstance
     }
 
     

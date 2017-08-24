@@ -42,10 +42,12 @@ extension ParseClient {
         static let Limit = "limit"
         static let Where = "where"
         static let Skip = "skip"
+        static let Order = "order"
     }
     
     struct Methods {
         static let PutStudent = "/<objectId>"
+        static let UpdatedAt = "-updatedAt"
     }
     
     

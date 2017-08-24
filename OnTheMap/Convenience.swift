@@ -34,18 +34,16 @@ extension UIViewController {
                                                name: Notification.Name.UIKeyboardWillHide,
                                                object: nil)
     }
-    
+
     // MARK:keyboardWillShow
     func keyboardWillShow(_ notification:Notification) {
         
-        view.frame.origin.y = -getKeyboardHeight(notification)
     }
     
     // MARK:keyboardWillHide
     
     func keyboardWillHide(_ notification:Notification) {
         
-        view.frame.origin.y = 0
     }
     
     // MARK: getKeyboardHeight
@@ -77,6 +75,22 @@ extension UIViewController {
         static let logoutError = "Could not log user out!"
         static let urlInputError = "Please insert a valid URL."
         static let geoError = "Unable to process location. Please enter a valid location."
+    }
+    
+    
+    func resignIfFirstResponder(_ textField: UITextField) {
+        if textField.isFirstResponder {
+            textField.resignFirstResponder()
+        }
+    }
+    
+    func configureTextField(_ textField: UITextField,_ VC: UITextFieldDelegate) {
+        let textFieldPaddingViewFrame = CGRect(x: 0.0, y: 0.0, width: 13.0, height: 0.0)
+        let textFieldPaddingView = UIView(frame: textFieldPaddingViewFrame)
+        textField.leftView = textFieldPaddingView
+        textField.leftViewMode = .always
+        textField.attributedPlaceholder = NSAttributedString(string: textField.placeholder!, attributes: [NSForegroundColorAttributeName: UIColor.white])
+        textField.delegate = VC
     }
     
     

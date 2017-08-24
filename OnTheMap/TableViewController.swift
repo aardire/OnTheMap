@@ -24,14 +24,21 @@ class TableViewController: UITableViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        ParseClient.sharedInstance().returnStudents(100) { (success, error) in
+      getCurrentStatus()
+        
+    }
+    
+    // MARK: get current students - make network request and populate for current view. 
+    private func getCurrentStatus() {
+        
+        ParseClient.sharedInstance.returnStudents(100) { (success) in
             
-            if success! {
-                performUIUpdatesOnMain {
+            performUIUpdatesOnMain {
+                if success {
                     self.studentsTableView.reloadData()
+                } else {
+                    self.showAlert(message: ErrorMessages.studentError)
                 }
-            } else {
-                print(error ?? "empty error")
             }
         }
         
@@ -40,24 +47,25 @@ class TableViewController: UITableViewController {
 
     @IBAction func refreshButton(_ sender: Any) {
         
-        performUIUpdatesOnMain {
-            self.studentsTableView.reloadData()
-        }
+      getCurrentStatus()
     }
 
     @IBAction func logoutButton(_ sender: Any) {
         
-        UdactiyClient.sharedInstance().udactiySessionDELETE() {(success,error) in
+        UdactiyClient.sharedInstance.udactiySessionDELETE() {(success) in
             
-            if success {
-                performUIUpdatesOnMain {
-                    let controller = self.storyboard!.instantiateViewController(withIdentifier: "LoginViewController")
-                    self.present(controller, animated: true, completion: nil)
+            performUIUpdatesOnMain {
+                if success {
+                    self.dismiss(animated: true, completion: nil)
+                } else {
+                    self.showAlert(message: ErrorMessages.logoutError)
                 }
             }
         }
             
     }
+    
+    
     
     
 // MARK: TableViewController : UITableViewDelegate, UITableViewDataSource
@@ -86,7 +94,10 @@ class TableViewController: UITableViewController {
         let app = UIApplication.shared
         let student = StudentData.locationArray[(indexPath as NSIndexPath).row]
         let toOpen = student.mediaURL
-        app.open(URL(string: toOpen)!, options: [:], completionHandler: nil)
+        var componets = URLComponents()
+        componets.scheme = "HTTPS"
+        componets.host = toOpen
+        app.open(componets.url!)
     }
     
 }

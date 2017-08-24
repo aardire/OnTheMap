@@ -17,12 +17,12 @@ class AddPinViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var addUrlText: UITextField!
     @IBOutlet weak var submitButton: UIButton!
 
-    var keyboardOnScreen = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
        
-        addUrlText.delegate = self
+        configureTextField(addUrlText, self)
+        
         performUIUpdatesOnMain {
             self.addLocationPin(User.Information.tempCoordinates)
             
@@ -43,7 +43,7 @@ class AddPinViewController: UIViewController, UITextFieldDelegate {
             return
         }
         
-        ParseClient.sharedInstance().addNewStudent() {(success) in
+        ParseClient.sharedInstance.addNewStudent() {(success) in
             
             guard success else {
                 performUIUpdatesOnMain {
@@ -82,11 +82,6 @@ class AddPinViewController: UIViewController, UITextFieldDelegate {
         return true
     }
     
-    private func resignIfFirstResponder(_ textField: UITextField) {
-        if textField.isFirstResponder {
-            textField.resignFirstResponder()
-        }
-    }
     
     @IBAction func userDidTapView(_ sender: AnyObject) {
         resignIfFirstResponder(addUrlText)
@@ -136,5 +131,6 @@ class AddPinViewController: UIViewController, UITextFieldDelegate {
         newPinMap.setRegion(coordinateRegion, animated: true)
     }
     
+  
 }
 

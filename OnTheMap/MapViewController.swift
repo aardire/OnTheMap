@@ -22,13 +22,19 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     override func viewWillAppear(_ animated:Bool) {
         super.viewWillAppear(animated)
         
+        getCurrentStatus()
+    }
+    
+    // MARK: get current students - make network request and populate for current view. 
+    private func getCurrentStatus() {
+        
         var annotations = [MKPointAnnotation]()
         
-        ParseClient.sharedInstance().returnStudents(100) { (success,error) in
+        ParseClient.sharedInstance.returnStudents(100) { (success) in
             
             performUIUpdatesOnMain {
-                if success! {
-            
+                if success {
+                    
                     for student in StudentData.locationArray {
                         
                         let coordinate = CLLocationCoordinate2D(latitude: CLLocationDegrees(student.latitude), longitude: CLLocationDegrees(student.longitude))
@@ -46,28 +52,27 @@ class MapViewController: UIViewController, MKMapViewDelegate {
                 self.mapView.addAnnotations(annotations)
             }
         }
+        
     }
     
 // MARK: Refresh Button 
     
     @IBAction func refreshButton(_ sender: Any) {
         
-        performUIUpdatesOnMain {
-            self.mapView.reloadInputViews()
-        }
+        getCurrentStatus()
     }
     
     @IBAction func logoutButton(_ sender: Any) {
         
-        UdactiyClient.sharedInstance().udactiySessionDELETE() {(success,error) in
+        UdactiyClient.sharedInstance.udactiySessionDELETE() {(success) in
             
-            if success {
-                performUIUpdatesOnMain {
-                    let controller = self.storyboard!.instantiateViewController(withIdentifier: "LoginViewController")
-                    self.present(controller, animated: true, completion: nil)
+            performUIUpdatesOnMain {
+                if success {
+                    self.dismiss(animated: true, completion: nil)
+                } else {
+                    self.showAlert(message: ErrorMessages.logoutError)
                 }
             }
-            
         }
     }
     
@@ -97,7 +102,10 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         if control == view.rightCalloutAccessoryView {
             let app = UIApplication.shared
             if let toOpen = view.annotation?.subtitle! {
-                app.open(URL(string: toOpen)!, options: [:], completionHandler: nil)
+                var componets = URLComponents()
+                componets.scheme = "HTTPS"
+                componets.host = toOpen
+                app.open(componets.url!)
             }
         }
     }

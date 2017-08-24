@@ -18,6 +18,7 @@ extension ParseClient {
         /* Specify Parameters for taskforGet */
         var parameters = [String: Any]()
         parameters[ParseClient.Parameters.Limit] = numOfStudents
+        parameters[ParseClient.Parameters.Order] = ParseClient.Methods.UpdatedAt
         
         let _ = taskForGetMethod(parameters) { (studentLocations, error) in
             
@@ -33,14 +34,14 @@ extension ParseClient {
         }
     }
     
-    func returnStudents(_ number: Int, _ completionHandlerForStudents: @escaping (_ success: Bool?, _ error: NSError?) -> Void) {
+    func returnStudents(_ number: Int, _ completionHandlerForStudents: @escaping (_ success: Bool) -> Void) {
         
         getAllStudentLocations(number) { (success, error, results) in
-            if let error = error {
-            completionHandlerForStudents(false,error)
+            if error != nil {
+            completionHandlerForStudents(false)
             } else {
                 StudentData.locationArray = StudentLocation.studentsFromResults(results!)
-                completionHandlerForStudents(true,nil)
+                completionHandlerForStudents(true)
             }
         }
 

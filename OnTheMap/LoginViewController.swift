@@ -14,7 +14,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     // MARK: Properties
     var userName:String?
     var userPassword: String?
-    var keyboardOnScreen = false
     
     // MARK: Outlets
     
@@ -24,13 +23,14 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var signUpButton: UIButton!
     @IBOutlet weak var udacityLogoImageView: UIImageView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    @IBOutlet weak var loginLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         configureUI()
         setupViewResizerOnKeyboardShown()
-        
+    
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -42,8 +42,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         
         startNetworkActivity()
         
-        self.userName = usernameTextField.text!
-        self.userPassword = passwordTextField.text!
+        userName = usernameTextField.text!
+        userPassword = passwordTextField.text!
         
         guard self.userName?.isEmpty == false && self.userPassword?.isEmpty == false else {
             stopNetworkActivity()
@@ -60,10 +60,11 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             }
         }
             
-        UdactiyClient.sharedInstance().getUdacityUserInfo(self.userName!,self.userPassword!) { (sucess, error) in
+        UdactiyClient.sharedInstance.getUdacityUserInfo(self.userName!,self.userPassword!) { (sucess, error) in
             
             guard sucess else {
                 performUIUpdatesOnMain {
+                    self.stopNetworkActivity()
                     self.showAlert(message: ErrorMessages.loginError)
                     self.usernameTextField.text = ""
                     self.passwordTextField.text = ""
@@ -87,13 +88,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         let url = NSURL(string: "https://www.udacity.com/account/auth#!/signup")
         UIApplication.shared.open(url! as URL)
     }
-    
 
-
-// MARK: - LoginViewController: UITextFieldDelegate
-
-
-    
     // MARK: UITextFieldDelegate
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -101,13 +96,19 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         return true
     }
     
-    
-    private func resignIfFirstResponder(_ textField: UITextField) {
-        if textField.isFirstResponder {
-            textField.resignFirstResponder()
-        }
+    override func keyboardWillShow(_ notification: Notification) {
+        
+        loginLabel.isHidden = true
+        udacityLogoImageView.isHidden = true
     }
     
+    override func keyboardWillHide(_ notification: Notification) {
+        
+        loginLabel.isHidden = false
+        udacityLogoImageView.isHidden = false
+    }
+    
+  
     @IBAction func userDidTapView(_ sender: AnyObject) {
         resignIfFirstResponder(usernameTextField)
         resignIfFirstResponder(passwordTextField)
@@ -118,20 +119,10 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
 // MARK: - LoginViewController (Configure UI)
 
     func configureUI() {
-        configureTextField(usernameTextField)
-        configureTextField(passwordTextField)
+        configureTextField(usernameTextField,self)
+        configureTextField(passwordTextField,self)
     }
-    
-    func configureTextField(_ textField: UITextField) {
-        let textFieldPaddingViewFrame = CGRect(x: 0.0, y: 0.0, width: 13.0, height: 0.0)
-        let textFieldPaddingView = UIView(frame: textFieldPaddingViewFrame)
-        textField.leftView = textFieldPaddingView
-        textField.leftViewMode = .always
-        textField.attributedPlaceholder = NSAttributedString(string: textField.placeholder!, attributes: [NSForegroundColorAttributeName: UIColor.white])
-        textField.delegate = self
-    }
-    
-    
+ 
     //MARK: Disables input and displays "busy" indicator while performing login.
     func startNetworkActivity() {
         activityIndicator.startAnimating()

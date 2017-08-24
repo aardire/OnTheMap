@@ -14,6 +14,9 @@ class UdactiyClient : NSObject {
     
     // MARK: Properties
     
+    // MARK: Shared Instance
+    static let sharedInstance = UdactiyClient() 
+    
     // shared session
     var session = URLSession.shared
     
@@ -22,13 +25,12 @@ class UdactiyClient : NSObject {
     override init() {
         super.init()
     }
-    
-    // MARK: Convenience Functions
+
     
     
     // MARK: networking functions
     
-    func taskForUdacityPOST(_ userName: String,_ userPassword: String, completionHandlerForPOST: @escaping (_ result: AnyObject?, _ error: NSError?) -> Void) -> URLSessionDataTask  {
+    func taskForUdacityPOST(_ userName: String,_ userPassword: String, completionHandlerForPOST: @escaping (_ result: AnyObject?, _ error: NSError?) -> Void) {
         
       
         /* 2/3. Build the URL, Configure the request */
@@ -38,89 +40,37 @@ class UdactiyClient : NSObject {
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         request.httpBody = "{\"udacity\": {\"username\": \"\(userName)\", \"password\": \"\(userPassword)\"}}".data(using: String.Encoding.utf8)
         
-        /* 4. Make the request */
-        let task = session.dataTask(with: request as URLRequest) { data, response, error in
+        let _ = returnRequest(request: request) { (result, error) in
             
-            func sendError(_ error: String) {
-                print(error)
-                let userInfo = [NSLocalizedDescriptionKey : error]
-                completionHandlerForPOST(nil, NSError(domain: "taskForPOSTMethod", code: 1, userInfo: userInfo))
-            }
-            
-            /* GUARD: Was there an error? */
-            guard (error == nil) else {
-                sendError("There was an error with your request: \(error!)")
-                return
-            }
-          
-            /* GUARD: Did we get a successful 2XX response? */
-            guard let statusCode = (response as? HTTPURLResponse)?.statusCode, statusCode >= 200 && statusCode <= 299 else {
-                sendError("Your request returned a status code other than 2xx!")
+            guard error == nil else {
+                completionHandlerForPOST(nil,error)
                 return
             }
             
-            /* GUARD: Was there any data returned? */
-            guard let data = data else {
-                sendError("No data was returned by the request!")
-                return
-            }
-            
-            let range = Range(5..<data.count)
-            let newData = data.subdata(in: range) /* subset response data! */
-            
-            /* 5/6. Parse the data and use the data (happens in completion handler) */
-            self.convertDataWithCompletionHandler(newData, completionHandlerForConvertData: completionHandlerForPOST)
+            completionHandlerForPOST(result,nil)
         }
-        
-        /* 7. Start the request */
-        task.resume()
-        return task
+
     }
     
-    func taskForUdacityGET(_ uniqueID: String?, completionHandlerForPOST: @escaping (_ result: AnyObject?, _ error: NSError?) -> Void) -> URLSessionDataTask  {
+    
+    
+    func taskForUdacityGET(_ uniqueID: String?, completionHandlerForGET: @escaping (_ result: AnyObject?, _ error: NSError?) -> Void) {
         
         let request = NSMutableURLRequest(url: URL(string: "https://www.udacity.com/api/users/\(uniqueID!)")!)
-        
-        /* 4. Make the request */
-        let task = session.dataTask(with: request as URLRequest) { data, response, error in
+        let _ = returnRequest(request: request) { (result, error) in
             
-            func sendError(_ error: String) {
-                print(error)
-                let userInfo = [NSLocalizedDescriptionKey : error]
-                completionHandlerForPOST(nil, NSError(domain: "taskForGETMethod", code: 1, userInfo: userInfo))
-            }
-            
-            /* GUARD: Was there an error? */
-            guard (error == nil) else {
-                sendError("There was an error with your request: \(error!)")
+            guard error == nil else {
+                completionHandlerForGET(nil,error)
                 return
             }
             
-            /* GUARD: Did we get a successful 2XX response? */
-            guard let statusCode = (response as? HTTPURLResponse)?.statusCode, statusCode >= 200 && statusCode <= 299 else {
-                sendError("Your request returned a status code other than 2xx!")
-                return
-            }
-            
-            /* GUARD: Was there any data returned? */
-            guard let data = data else {
-                sendError("No data was returned by the request!")
-                return
-            }
-            
-            let range = Range(5..<data.count)
-            let newData = data.subdata(in: range) /* subset response data! */
-            
-            /* 5/6. Parse the data and use the data (happens in completion handler) */
-            self.convertDataWithCompletionHandler(newData, completionHandlerForConvertData: completionHandlerForPOST)
+            completionHandlerForGET(result,nil)
         }
         
-        /* 7. Start the request */
-        task.resume()
-        return task
     }
+  
     
-    func udactiySessionDELETE(_ completionHandlerDELETE: @escaping (_ success:Bool,_ error: String?) -> Void) {
+    func udactiySessionDELETE(_ completionHandlerDELETE: @escaping (_ success:Bool) -> Void) {
         
         let request = NSMutableURLRequest(url: URL(string: "https://www.udacity.com/api/session")!)
         request.httpMethod = "DELETE"
@@ -135,12 +85,12 @@ class UdactiyClient : NSObject {
         let session = URLSession.shared
         let task = session.dataTask(with: request as URLRequest) { data, response, error in
             if error != nil { // Handle error…
-                return
+                completionHandlerDELETE(false)
             }
             let range = Range(5..<data!.count)
             let newData = data?.subdata(in: range) /* subset response data! */
             print(NSString(data: newData!, encoding: String.Encoding.utf8.rawValue)!)
-            completionHandlerDELETE(true,nil)
+            completionHandlerDELETE(true)
         }
         task.resume()
     }
@@ -162,14 +112,46 @@ class UdactiyClient : NSObject {
         completionHandlerForConvertData(parsedResult, nil)
     }
     
-    // MARK: Shared Instance
-    
-    class func sharedInstance() -> UdactiyClient {
-        struct Singleton {
-            static var sharedInstance = UdactiyClient()
+    private func returnRequest(request: NSMutableURLRequest, completionHandler: @escaping (_ result: AnyObject?, _ error: NSError?) -> Void) -> URLSessionDataTask {
+        
+        
+        /* 4. Make the request */
+        let task = session.dataTask(with: request as URLRequest) { data, response, error in
+            
+            func sendError(_ error: String) {
+                print(error)
+                let userInfo = [NSLocalizedDescriptionKey : error]
+                completionHandler(nil, NSError(domain: "taskForRequest", code: 1, userInfo: userInfo))
+            }
+            
+            /* GUARD: Was there an error? */
+            guard (error == nil) else {
+                sendError("There was an error with your request: \(error!)")
+                return
+            }
+            
+            /* GUARD: Did we get a successful 2XX response? */
+            guard let statusCode = (response as? HTTPURLResponse)?.statusCode, statusCode >= 200 && statusCode <= 299 else {
+                sendError("Your request returned a status code other than 2xx!")
+                return
+            }
+            
+            /* GUARD: Was there any data returned? */
+            guard let data = data else {
+                sendError("No data was returned by the request!")
+                return
+            }
+            
+            let range = Range(5..<data.count)
+            let newData = data.subdata(in: range) /* subset response data! */
+            
+            /* 5/6. Parse the data and use the data (happens in completion handler) */
+            self.convertDataWithCompletionHandler(newData, completionHandlerForConvertData: completionHandler)
         }
-        return Singleton.sharedInstance
+        
+        /* 7. Start the request */
+        task.resume()
+        return task
     }
-
     
 }

@@ -39,7 +39,7 @@ extension UdactiyClient {
     
     private func getUserData(_ uniqueKey: String, _ completionHandlerForUserData: @escaping (_ sucess: Bool, _ results: [String:AnyObject]?, _ errorString: String?) -> Void) {
         
-        let _ = taskForUdacityGET(uniqueKey) { (results, error) in
+        taskForUdacityGET(uniqueKey) { (results, error) in
             
             if let error = error {
                 print(error)

@@ -15,14 +15,15 @@ class InformationPostingViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var findButton: UIButton!
     @IBOutlet weak var locationInput: UITextField!
+    @IBOutlet weak var inputLabel: UILabel!
     
 
     lazy var geocoder = CLGeocoder()
-    var keyboardOnScreen = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        locationInput.delegate = self
+        configureTextField(locationInput, self)
+        
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -37,9 +38,12 @@ class InformationPostingViewController: UIViewController, UITextFieldDelegate {
     //MARK: Find button tapped
     @IBAction func findButton(_ sender: Any) {
         
-        startGeocoding()
+        //start
+        activityIndicator.startAnimating()
+        
         guard locationInput.text!.isEmpty == false else {
-            self.stopGeocoding()
+            //stop
+            activityIndicator.stopAnimating()
             self.showAlert(message: ErrorMessages.inputError)
             return
         }
@@ -61,7 +65,8 @@ class InformationPostingViewController: UIViewController, UITextFieldDelegate {
         self.geocoder.geocodeAddressString(inputLocation) { (placemarks, error) in
             
             if error != nil {
-                self.stopGeocoding()
+                //stop
+                self.activityIndicator.stopAnimating()
                 self.showAlert(message: ErrorMessages.geoError)
                 self.locationInput.text = ""
                 
@@ -75,30 +80,22 @@ class InformationPostingViewController: UIViewController, UITextFieldDelegate {
                 if let location = location {
                     User.Information.tempCoordinates = location.coordinate
                 } else {
-                    self.stopGeocoding()
+                    //stop
+                    self.activityIndicator.stopAnimating()
                     self.showAlert(message: ErrorMessages.locError)
                 }
                 
                 performUIUpdatesOnMain {
-                    self.stopGeocoding()
+                    //stop
+                    self.activityIndicator.stopAnimating()
+                    
                     User.Information.MapString = inputLocation
                     self.performSegue(withIdentifier: "AddPin", sender: self)
                 }
             }
         }
     }
-    
-    // MARK: UITextFieldDelegate functions
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
-        return true
-    }
-    
-    private func resignIfFirstResponder(_ textField: UITextField) {
-        if textField.isFirstResponder {
-            textField.resignFirstResponder()
-        }
-    }
+  
     
     @IBAction func userDidTapView(_ sender: AnyObject) {
         resignIfFirstResponder(locationInput)
@@ -108,12 +105,19 @@ class InformationPostingViewController: UIViewController, UITextFieldDelegate {
         self.view.endEditing(true)
     }
     
-    //MARK: Activity indicator control functions.
-    func startGeocoding() {
-        activityIndicator.startAnimating()
+    // MARK: UITextFieldDelegate functions
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
     }
     
-    func stopGeocoding() {
-        activityIndicator.stopAnimating()
+    override func keyboardWillShow(_ notification: Notification) {
+       
+        inputLabel.isHidden = true
+    }
+    
+    override func keyboardWillHide(_ notification: Notification) {
+        
+        inputLabel.isHidden = false
     }
 }
