@@ -20,12 +20,7 @@ class TableViewController: UITableViewController {
     @IBOutlet var studentsTableView: UITableView!
     
     // MARK: Life Cycle
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-    }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         

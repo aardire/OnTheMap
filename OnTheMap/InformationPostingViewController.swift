@@ -16,8 +16,7 @@ class InformationPostingViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var findButton: UIButton!
     @IBOutlet weak var locationInput: UITextField!
     
-    
-    var coordinates: CLLocationCoordinate2D?
+
     lazy var geocoder = CLGeocoder()
     var keyboardOnScreen = false
     
@@ -34,20 +33,7 @@ class InformationPostingViewController: UIViewController, UITextFieldDelegate {
         super.viewWillDisappear(animated)
         unsubscribeFromKeyboardNotifications()
     }
-    
-    //MARK: After user input of location, new VC will load to ask for URL detail.
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
-        if segue.identifier == "AddPin" {
-            if let addPinController = segue.destination as? AddPinViewController {
-                addPinController.inputCoordinates = coordinates
-                addPinController.geocodedLocation = locationInput.text!
-            }
-        } else {
-            return
-        }
-    }
-    
+ 
     //MARK: Find button tapped
     @IBAction func findButton(_ sender: Any) {
         
@@ -67,6 +53,7 @@ class InformationPostingViewController: UIViewController, UITextFieldDelegate {
     @IBAction func cancelButton(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
     }
+   
     
     
     //MARK: Function to geocode address String
@@ -86,7 +73,7 @@ class InformationPostingViewController: UIViewController, UITextFieldDelegate {
                 }
                 
                 if let location = location {
-                    self.coordinates = location.coordinate
+                    User.Information.tempCoordinates = location.coordinate
                 } else {
                     self.stopGeocoding()
                     self.showAlert(message: ErrorMessages.locError)
@@ -94,6 +81,7 @@ class InformationPostingViewController: UIViewController, UITextFieldDelegate {
                 
                 performUIUpdatesOnMain {
                     self.stopGeocoding()
+                    User.Information.MapString = inputLocation
                     self.performSegue(withIdentifier: "AddPin", sender: self)
                 }
             }

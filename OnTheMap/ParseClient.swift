@@ -73,18 +73,14 @@ class ParseClient : NSObject {
     }
     
     //MARK: Function to add new student location.
-    func addNewStudent(mapString: String, mediaURL: String, latitude: CLLocationDegrees, longitude: CLLocationDegrees, completionHandler:  @escaping (_ success: Bool) -> Void) {
-        
-        let first = User.Information.FirstName
-        let last = User.Information.LastName
-        let key = User.Information.UniqueKey
-      
+    func addNewStudent(_ completionHandler:  @escaping (_ success: Bool) -> Void) {
+     
         let request = NSMutableURLRequest(url: URL(string: "https://parse.udacity.com/parse/classes/StudentLocation")!)
         request.httpMethod = "POST"
         request.addValue(ParseClient.Constants.ParseApplicationID, forHTTPHeaderField: "X-Parse-Application-Id")
         request.addValue(ParseClient.Constants.RESTApiKey, forHTTPHeaderField: "X-Parse-REST-API-Key")
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.httpBody = "{\"uniqueKey\": \"\(key)\", \"firstName\": \"\(first)\", \"lastName\": \"\(last)\",\"mapString\": \"\(mapString)\", \"mediaURL\": \"\(mediaURL)\",\"latitude\": \(latitude), \"longitude\": \(longitude)}".data(using: String.Encoding.utf8)
+        request.httpBody = "{\"uniqueKey\": \"\(User.Information.UniqueKey)\", \"firstName\": \"\(User.Information.FirstName)\", \"lastName\": \"\(User.Information.LastName)\",\"mapString\": \"\(User.Information.MapString)\", \"mediaURL\": \"\(User.Information.MediaURL)\",\"latitude\": \(User.Information.Latitude), \"longitude\": \(User.Information.Longitude)}".data(using: String.Encoding.utf8)
         
         
         let task = session.dataTask(with: request as URLRequest) { data, response, error in

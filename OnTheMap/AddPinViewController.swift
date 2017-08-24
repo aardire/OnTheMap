@@ -16,28 +16,26 @@ class AddPinViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var newPinMap: MKMapView!
     @IBOutlet weak var addUrlText: UITextField!
     @IBOutlet weak var submitButton: UIButton!
-    
-    var inputCoordinates: CLLocationCoordinate2D?
-    var lat: CLLocationDegrees?
-    var long: CLLocationDegrees?
-    var geocodedLocation: String?
+
     var keyboardOnScreen = false
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
        
         addUrlText.delegate = self
         performUIUpdatesOnMain {
-            self.addLocationPin(self.inputCoordinates!)
+            self.addLocationPin(User.Information.tempCoordinates)
             
         }
     }
+    
     
     //MARK: Submit information to Parse and return to sending VC (map or tableview)
 
     @IBAction func submitButton(_ sender: Any) {
         configUI(false)
+        
+        User.Information.MediaURL = addUrlText.text!
         
         guard addUrlText?.text!.isEmpty == false else {
             configUI(true)
@@ -45,7 +43,7 @@ class AddPinViewController: UIViewController, UITextFieldDelegate {
             return
         }
         
-        ParseClient.sharedInstance().addNewStudent(mapString: geocodedLocation!, mediaURL: addUrlText.text!, latitude: lat!, longitude: long!) {(success) in
+        ParseClient.sharedInstance().addNewStudent() {(success) in
             
             guard success else {
                 performUIUpdatesOnMain {
@@ -125,8 +123,8 @@ class AddPinViewController: UIViewController, UITextFieldDelegate {
         
         let annotation = MKPointAnnotation()
         annotation.coordinate = coordinates
-        lat = coordinates.latitude
-        long = coordinates.longitude
+        User.Information.Latitude = coordinates.latitude
+        User.Information.Longitude = coordinates.longitude
         annotation.title = "Your location"
         newPinMap.addAnnotation(annotation)
         
